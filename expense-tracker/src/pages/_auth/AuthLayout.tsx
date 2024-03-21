@@ -16,7 +16,7 @@ const AuthLayout = () => {
           <img
             src="assets/images/preview.png"
             alt="Preview Image"
-            className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
+            className="hidden xl:block h-screen w-100 object-cover bg-no-repeat"
           />
         </>
       )}
