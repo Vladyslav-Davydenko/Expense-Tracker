@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function useDebouncedCallback<T extends Function>(
+export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
   timeout = 500
 ) {
@@ -13,7 +13,7 @@ export function useDebouncedCallback<T extends Function>(
     };
   }, []);
 
-  return (...args: any[]) => {
+  return (...args: Parameters<T>) => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       callback(...args);
