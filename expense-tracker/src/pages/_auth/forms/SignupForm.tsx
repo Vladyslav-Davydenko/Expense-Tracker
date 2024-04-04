@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/shared/Loader";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 export const SignupForm = () => {
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -33,9 +34,10 @@ export const SignupForm = () => {
   // For now should be like this
   const isLoading = false;
 
-  const onSubmit = (values: z.infer<typeof SignupValidation>) => {
-    //Create the user and send it to backend for JWT token
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof SignupValidation>) => {
+    const newUser = await createUserAccount(values);
+
+    console.log(newUser);
   };
 
   return (
