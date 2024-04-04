@@ -19,7 +19,7 @@ function App() {
         </Route>
         {/* private routes */}
         <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Home count={0} />} />
         </Route>
       </Routes>
     </main>
