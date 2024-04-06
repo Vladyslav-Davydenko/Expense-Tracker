@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 
 import { SignupValidation } from "@/lib/validation";
 
+import { useToast } from "@/components/ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -21,6 +23,7 @@ import Loader from "@/components/shared/Loader";
 import { createUserAccount } from "@/lib/appwrite/api";
 
 export const SignupForm = () => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -37,7 +40,14 @@ export const SignupForm = () => {
   const onSubmit = async (values: z.infer<typeof SignupValidation>) => {
     const newUser = await createUserAccount(values);
 
-    console.log(newUser);
+    if (!newUser) {
+      return toast({
+        variant: "destructive",
+        title: "Sign up failed. Please try again.",
+      });
+    }
+    // Add functionality to create session for each user
+    // const session = await signInAccount()
   };
 
   return (

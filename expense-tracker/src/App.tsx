@@ -5,6 +5,7 @@ import RootLayout from "./pages/_root/RootLayout";
 import { SigninForm } from "./pages/_auth/forms/SigninForm";
 import { SignupForm } from "./pages/_auth/forms/SignupForm";
 import { Home } from "./pages/_root";
+import { Toaster } from "./components/ui/toaster";
 
 import "./index.css";
 
@@ -22,6 +23,8 @@ function App() {
           <Route index element={<Home count={0} />} />
         </Route>
       </Routes>
+
+      <Toaster />
     </main>
   );
 }
