@@ -20,7 +20,10 @@ import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/shared/Loader";
-import { createUserAccount } from "@/lib/appwrite/api";
+import {
+  useCreateUserAccount,
+  useSignInAccount,
+} from "@/lib/react-query/QueriesAndMuntations";
 
 export const SignupForm = () => {
   const { toast } = useToast();
@@ -34,8 +37,11 @@ export const SignupForm = () => {
     },
   });
 
-  // For now should be like this
-  const isLoading = false;
+  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+    useCreateUserAccount();
+
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
 
   const onSubmit = async (values: z.infer<typeof SignupValidation>) => {
     const newUser = await createUserAccount(values);
@@ -46,8 +52,18 @@ export const SignupForm = () => {
         title: "Sign up failed. Please try again.",
       });
     }
-    // Add functionality to create session for each user
-    // const session = await signInAccount()
+
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (!session) {
+      return toast({
+        variant: "destructive",
+        title: "Sign up failed. Please try again.",
+      });
+    }
   };
 
   return (
@@ -124,7 +140,7 @@ export const SignupForm = () => {
             )}
           />
           <Button type="submit" className="bg-primary-light">
-            {isLoading ? (
+            {isCreatingUser ? (
               <div className="flex justify-center items-center gap-2">
                 <Loader />
               </div>
