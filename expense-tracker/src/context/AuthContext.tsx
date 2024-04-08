@@ -40,14 +40,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkAuthUser = async () => {
     try {
-      const currentAccount = await getCurrentUser();
+      const currentUser = await getCurrentUser();
 
-      if (currentAccount) {
+      if (currentUser) {
         setUser({
-          id: currentAccount.$id,
-          name: currentAccount.name,
-          username: currentAccount.username,
-          email: currentAccount.email,
+          id: currentUser.$id,
+          name: currentUser.name,
+          username: currentUser.username,
+          email: currentUser.email,
         });
 
         setIsAuthenticate(true);
