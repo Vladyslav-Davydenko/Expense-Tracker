@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import { SignupValidation } from "@/lib/validation";
@@ -24,9 +24,11 @@ import {
   useCreateUserAccount,
   useSignInAccount,
 } from "@/lib/react-query/QueriesAndMuntations";
+import { useUserContext } from "@/context/AuthContext";
 
 export const SignupForm = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -43,12 +45,13 @@ export const SignupForm = () => {
   const { mutateAsync: signInAccount, isPending: isSigningIn } =
     useSignInAccount();
 
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+
   const onSubmit = async (values: z.infer<typeof SignupValidation>) => {
     const newUser = await createUserAccount(values);
 
     if (!newUser) {
       return toast({
-        variant: "destructive",
         title: "Sign up failed. Please try again.",
       });
     }
@@ -60,7 +63,17 @@ export const SignupForm = () => {
 
     if (!session) {
       return toast({
-        variant: "destructive",
+        title: "Sign up failed. Please try again.",
+      });
+    }
+
+    const isLoggedIn = await checkAuthUser();
+
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast({
         title: "Sign up failed. Please try again.",
       });
     }
