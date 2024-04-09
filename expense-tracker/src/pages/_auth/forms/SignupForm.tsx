@@ -42,10 +42,9 @@ export const SignupForm = () => {
   const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
     useCreateUserAccount();
 
-  const { mutateAsync: signInAccount, isPending: isSigningIn } =
-    useSignInAccount();
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
-  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser } = useUserContext();
 
   const onSubmit = async (values: z.infer<typeof SignupValidation>) => {
     const newUser = await createUserAccount(values);
@@ -99,7 +98,12 @@ export const SignupForm = () => {
               <FormItem>
                 <FormLabel className="pl-2">Name</FormLabel>
                 <FormControl>
-                  <Input className="text-primary-dark" type="text" {...field} />
+                  <Input
+                    className="text-primary-dark"
+                    type="text"
+                    data-testid="name_input"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

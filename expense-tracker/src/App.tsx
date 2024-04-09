@@ -4,7 +4,7 @@ import AuthLayout from "./pages/_auth/AuthLayout";
 import RootLayout from "./pages/_root/RootLayout";
 import { SigninForm } from "./pages/_auth/forms/SigninForm";
 import { SignupForm } from "./pages/_auth/forms/SignupForm";
-import { Home } from "./pages/_root";
+import { Dashboard, Tests } from "./pages/_root";
 import { Toaster } from "./components/ui/toaster";
 
 import "./index.css";
@@ -20,7 +20,8 @@ function App() {
         </Route>
         {/* private routes */}
         <Route element={<RootLayout />}>
-          <Route index element={<Home count={0} />} />
+          <Route index element={<Dashboard />} />
+          <Route path="/test" element={<Tests count={0} />} />
         </Route>
       </Routes>
 

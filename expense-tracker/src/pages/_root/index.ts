@@ -1,1 +1,2 @@
-export { default as Home } from "./Home";
+export { default as Tests } from "./Tests";
+export { default as Dashboard } from "./Dashboard";

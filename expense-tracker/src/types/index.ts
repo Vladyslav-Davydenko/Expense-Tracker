@@ -1,5 +1,10 @@
 import React from "react";
 
+export type INavLink = {
+  imgURL: string;
+  route: string;
+  label: string;
+};
 export interface INewUser {
   name: string;
   username: string;

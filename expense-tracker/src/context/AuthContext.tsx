@@ -3,14 +3,14 @@ import { IContexType, IUser } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const INITIAL_USER = {
+export const INITIAL_USER = {
   id: "",
   name: "",
   username: "",
   email: "",
 };
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
   isAuthenticated: false,
