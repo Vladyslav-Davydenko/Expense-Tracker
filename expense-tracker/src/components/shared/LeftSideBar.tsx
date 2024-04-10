@@ -44,7 +44,10 @@ const LeftSidebar = () => {
             <Loader />
           </div>
         ) : (
-          <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
+          <Link
+            to={`/profile/${user.id}`}
+            className="flex gap-3 items-center p-3"
+          >
             <img
               src={"/assets/icons/profile-placeholder.svg"}
               alt="profile"
@@ -87,11 +90,7 @@ const LeftSidebar = () => {
         </ul>
       </div>
 
-      <Button
-        variant="ghost"
-        className="shad-button_ghost flex justify-end"
-        onClick={(e) => handleSignOut(e)}
-      >
+      <Button className="flex justify-end" onClick={(e) => handleSignOut(e)}>
         <img
           src="/assets/icons/logout.svg"
           alt="logout"

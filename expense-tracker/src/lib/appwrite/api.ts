@@ -1,8 +1,9 @@
 import { ID, Query } from "appwrite";
 
-import { INewUser } from "@/types";
+import { IExpenses, INewUser } from "@/types";
 import { account, appwriteConfig, databases } from "./config";
 
+// USER
 export async function createUserAccount(user: INewUser) {
   try {
     const newAccount = await account.create(
@@ -96,4 +97,24 @@ export async function getCurrentUser() {
   } catch (error) {
     console.log(error);
   }
+}
+
+// EXPENSES
+
+export async function fetchExpenses() {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const expenses = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.expenseCollectionId,
+    [Query.equal("owner", currentUser.$id)]
+  );
+
+  if (expenses.documents.length <= 0) {
+    return [];
+  }
+
+  return expenses.documents as IExpenses[];
 }

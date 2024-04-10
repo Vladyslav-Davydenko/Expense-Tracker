@@ -1,10 +1,18 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createUserAccount,
   signInAccount,
   signOutAccount,
+  fetchExpenses,
 } from "../appwrite/api";
 import { INewUser } from "@/types";
+
+export const useGetExpenses = () => {
+  return useQuery({
+    queryKey: ["expenses"],
+    queryFn: fetchExpenses,
+  });
+};
 
 export const useCreateUserAccount = () => {
   return useMutation({
