@@ -1,17 +1,17 @@
 import { IExpenses } from "@/types";
-import { columns } from "./transaction-columns";
+import { columns } from "./transactions-columns-dashboard";
 import DataTable from "@/components/ui/data-table";
 import Loader from "../Loader";
 
-interface TransactionsTableProps {
+interface TransactionsTableDashboardProps {
   expenses: IExpenses[];
   isLoading: boolean;
 }
 
-export default function TransactionsTable({
+export default function TransactionsTableDashboard({
   expenses,
   isLoading,
-}: TransactionsTableProps) {
+}: TransactionsTableDashboardProps) {
   if (isLoading) {
     return <Loader />;
   }

@@ -6,12 +6,10 @@ const Transactions = () => {
   const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
 
   return (
-    <div>
-      <TransactionsTable
-        expenses={expenses || []}
-        isLoading={isExpensesLoading}
-      />
-    </div>
+    <TransactionsTable
+      expenses={expenses || []}
+      isLoading={isExpensesLoading}
+    />
   );
 };
 

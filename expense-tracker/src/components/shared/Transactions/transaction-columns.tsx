@@ -4,27 +4,42 @@ import clsx from "clsx";
 
 export const columns: ColumnDef<IExpenses>[] = [
   {
+    accessorKey: "$id",
+    header: () => <div>Expense's ID</div>,
+  },
+  {
     accessorKey: "type.name",
     header: "Type",
     cell: ({ row }) => {
-      const boxColor = `bg-${row.original.type.color}`;
+      const boxColor = row.original.type.color;
       const boxClasses = clsx({
         [boxColor]: true,
         "w-[16px] h-[16px] rounded-sm": true,
       });
-      return <div className={boxClasses}></div>;
+      return (
+        <div className="flex gap-2 justify-start items-center">
+          <div className={boxClasses}></div>
+          {`( ${row.original.type.name} )`}
+        </div>
+      );
     },
   },
   {
     accessorKey: "description",
-    header: () => <div className="text-center">Description</div>,
+    header: () => <div className="text-start">Description</div>,
   },
   {
     accessorKey: "date",
-    header: () => <div className="text-center">Date</div>,
+    header: () => <div className="text-start">Date</div>,
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
-      const formattedDate = date.toLocaleString("en-US");
+      const formattedDate =
+        date.toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }) + date.toLocaleString("en-US");
       return <div>{formattedDate}</div>;
     },
   },

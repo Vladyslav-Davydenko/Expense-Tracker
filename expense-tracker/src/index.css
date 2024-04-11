@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+.blue {
+  background-color: blue;
+}
+.violet {
+  background-color: violet;
+}
+.pink {
+  background-color: pink;
+}
+.yellow {
+  background-color: yellow;
+}
+.yellowgreen {
+  background-color: yellowgreen;
+}
+.orange {
+  background-color: orange;
+}
+.white {
+  background-color: white;
+}
+.purple {
+  background-color: purple;
+}
+.red {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
+.lightblue {
+  background-color: lightblue;
+}
+.darkblue {
+  background-color: darkblue;
+}
+.coral {
+  background-color: coral;
+}
+.grey {
+  background-color: grey;
+}
+
 @layer base {
   * {
     @apply box-border list-none p-0 m-0 scroll-smooth;

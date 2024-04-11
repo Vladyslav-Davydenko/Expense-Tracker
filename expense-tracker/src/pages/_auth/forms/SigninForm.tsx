@@ -110,7 +110,7 @@ export const SigninForm = () => {
             )}
           />
           <Button type="submit" className="bg-primary-light">
-            {isUserLoading ? (
+            {isUserLoading || isPending ? (
               <div className="flex justify-center items-center gap-2">
                 <Loader />
               </div>
