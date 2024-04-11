@@ -4,8 +4,16 @@ import {
   signInAccount,
   signOutAccount,
   fetchExpenses,
+  fetchLatestExpenses,
 } from "../appwrite/api";
 import { INewUser } from "@/types";
+
+export const useGetLatestExpenses = () => {
+  return useQuery({
+    queryKey: ["expenses"],
+    queryFn: fetchLatestExpenses,
+  });
+};
 
 export const useGetExpenses = () => {
   return useQuery({

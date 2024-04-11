@@ -101,6 +101,24 @@ export async function getCurrentUser() {
 
 // EXPENSES
 
+export async function fetchLatestExpenses() {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const expenses = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.expenseCollectionId,
+    [Query.equal("owner", currentUser.$id), Query.limit(4)]
+  );
+
+  if (expenses.documents.length <= 0) {
+    return [];
+  }
+
+  return expenses.documents as IExpenses[];
+}
+
 export async function fetchExpenses() {
   const currentUser = await getCurrentUser();
 
