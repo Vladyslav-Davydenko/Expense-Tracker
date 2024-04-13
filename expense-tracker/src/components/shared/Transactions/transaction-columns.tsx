@@ -1,5 +1,6 @@
 import { IExpenses } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import EditableCell from "@/components/ui/editable-cell";
 import clsx from "clsx";
 
 export const columns: ColumnDef<IExpenses>[] = [
@@ -26,7 +27,8 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "description",
-    header: () => <div className="text-start">Description</div>,
+    header: () => <div className="text-start pl-[12px]">Description</div>,
+    cell: EditableCell,
   },
   {
     accessorKey: "date",

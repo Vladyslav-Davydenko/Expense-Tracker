@@ -1,12 +1,15 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createUserAccount,
   signInAccount,
   signOutAccount,
   fetchExpenses,
   fetchLatestExpenses,
+  updateExpenses,
 } from "../appwrite/api";
-import { INewUser } from "@/types";
+import { IExpenses, INewUser } from "@/types";
+
+// EXPENSES
 
 export const useGetLatestExpenses = () => {
   return useQuery({
@@ -21,6 +24,33 @@ export const useGetExpenses = () => {
     queryFn: fetchExpenses,
   });
 };
+
+export const useUpdateExpenses = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newExpense: IExpenses) => updateExpenses(newExpense),
+    onMutate: async (_newTodo) => {
+      await queryClient.cancelQueries({ queryKey: ["expenses"] });
+
+      // Snapshot the previous value
+      const previousExpenses = queryClient.getQueryData(["expenses"]);
+
+      // Return a context object with the snapshotted value
+      return { previousExpenses };
+    },
+
+    onError: (_err, _newTodo, context) => {
+      console.log(context?.previousExpenses);
+      queryClient.setQueryData(["expenses"], context?.previousExpenses);
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+    },
+  });
+};
+
+// AUTH
 
 export const useCreateUserAccount = () => {
   return useMutation({

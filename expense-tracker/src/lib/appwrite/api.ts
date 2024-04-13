@@ -136,3 +136,27 @@ export async function fetchExpenses() {
 
   return expenses.documents as IExpenses[];
 }
+
+export async function updateExpenses(newExpense: IExpenses) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const expense = await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.expenseCollectionId,
+    newExpense.$id,
+    {
+      owner: currentUser.$id,
+      type: newExpense.type,
+      date: newExpense.date,
+      amount: newExpense.amount,
+      description: newExpense.description,
+      isSpent: newExpense.isSpent,
+    }
+  );
+
+  if (!expense) throw Error;
+
+  return expense as IExpenses;
+}
