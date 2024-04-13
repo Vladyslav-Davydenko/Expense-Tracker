@@ -1,13 +1,17 @@
-import { IExpenses } from "@/types";
-import { ColumnDef } from "@tanstack/react-table";
-import EditableCell from "@/components/shared/Transactions/editable-cell";
 import clsx from "clsx";
+import { ColumnDef } from "@tanstack/react-table";
+
+import { IExpenses } from "@/types";
+
+import EditableCell from "./editable-cell";
 import ChoiceCell from "./choice-cell";
+import HiddenCell from "./hidden-cell";
 
 export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "$id",
     header: () => <div>Expense's ID</div>,
+    cell: HiddenCell,
   },
   {
     accessorKey: "type.name",
@@ -27,10 +31,15 @@ export const columns: ColumnDef<IExpenses>[] = [
       const formattedDate =
         date.toLocaleDateString("en-US", {
           weekday: "long",
-          year: "numeric",
           month: "long",
           day: "numeric",
-        }) + date.toLocaleString("en-US");
+        }) +
+        ", " +
+        date.toLocaleString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        });
       return <div>{formattedDate}</div>;
     },
   },

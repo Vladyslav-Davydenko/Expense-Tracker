@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useUpdateExpenses } from "@/lib/react-query/QueriesAndMuntations";
+
+import { IExpenses } from "@/types";
+
 import { Input } from "../../ui/input";
 import { Column, Row } from "@tanstack/react-table";
-import { IExpenses } from "@/types";
-import { useUpdateExpenses } from "@/lib/react-query/QueriesAndMuntations";
 
 interface EditableCellProps {
   getValue: () => any;
@@ -12,8 +15,9 @@ interface EditableCellProps {
 
 const EditableCell = ({ getValue, row, column }: EditableCellProps) => {
   const initialValue = getValue();
-  const [value, setValue] = useState(initialValue as string);
 
+  const { toast } = useToast();
+  const [value, setValue] = useState(initialValue as string);
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 
   const handleOnBlur = async () => {
@@ -22,7 +26,15 @@ const EditableCell = ({ getValue, row, column }: EditableCellProps) => {
 
     const expense = await updateExpense(newExpense);
 
-    if (expense) console.log(expense);
+    if (!expense) {
+      return toast({
+        title: "Update failed. Please try again.",
+      });
+    }
+
+    return toast({
+      title: "Update successed.",
+    });
   };
 
   useEffect(() => {

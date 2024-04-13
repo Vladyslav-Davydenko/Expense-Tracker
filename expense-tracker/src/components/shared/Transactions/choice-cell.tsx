@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Column, Row } from "@tanstack/react-table";
-import { IExpenses } from "@/types";
-import { Check, ChevronsUpDown } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-
+import { useToast } from "@/components/ui/use-toast";
 import {
   useGetTypes,
   useUpdateExpenses,
 } from "@/lib/react-query/QueriesAndMuntations";
 
+import { IExpenses } from "@/types";
+
+import { cn } from "@/lib/utils";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Column, Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -33,9 +34,11 @@ interface EditableCellProps {
 
 export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const initialValue = getValue();
+
+  const { toast } = useToast();
+  const isMounted = useRef(false);
   const [value, setValue] = useState(initialValue as string);
   const [open, setOpen] = useState(false);
-  const isMounted = useRef(false);
 
   const { data: types, isLoading: isTypesFetching } = useGetTypes();
   const { mutateAsync: updateExpense } = useUpdateExpenses();
@@ -51,7 +54,7 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
 
   const defaultCell = (
     <Button
-      variant="outline"
+      variant="ghost"
       role="combobox"
       aria-expanded={open}
       className="w-[200px] justify-between"
@@ -72,10 +75,6 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
     </Button>
   );
 
-  if (isTypesFetching || !types) {
-    return defaultCell;
-  }
-
   const handleChange = async () => {
     const newType = {
       ...row.original.type,
@@ -90,17 +89,29 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
 
     const expense = await updateExpense(newExpense);
 
-    if (expense) console.log(expense);
+    if (!expense) {
+      return toast({
+        title: "Update failed. Please try again.",
+      });
+    }
+
+    return toast({
+      title: "Update successed.",
+    });
   };
+
+  if (isTypesFetching || !types) {
+    return defaultCell;
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[200px] justify-between hover:bg-primary"
         >
           {value ? (
             <div className="flex gap-2 justify-start items-center">
@@ -131,7 +142,7 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
                     setValue(type.name);
                     setOpen(false);
                   }}
-                  className=" cursor-pointer hover:bg-secondary-4"
+                  className=" cursor-pointer hover:bg-primary-light"
                 >
                   <Check
                     className={cn(
