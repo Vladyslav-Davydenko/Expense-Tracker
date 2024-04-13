@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 
-import { IExpenses, INewUser } from "@/types";
+import { IExpenses, INewUser, IType } from "@/types";
 import { account, appwriteConfig, databases } from "./config";
 
 // USER
@@ -159,4 +159,24 @@ export async function updateExpenses(newExpense: IExpenses) {
   if (!expense) throw Error;
 
   return expense as IExpenses;
+}
+
+// TYPES
+
+export async function fetchTypes() {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const expenses = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.typeCollectionId,
+    [Query.equal("owner", currentUser.$id)]
+  );
+
+  if (expenses.documents.length <= 0) {
+    return [];
+  }
+
+  return expenses.documents as IType[];
 }

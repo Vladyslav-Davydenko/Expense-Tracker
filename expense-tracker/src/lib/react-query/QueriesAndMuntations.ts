@@ -6,6 +6,7 @@ import {
   fetchExpenses,
   fetchLatestExpenses,
   updateExpenses,
+  fetchTypes,
 } from "../appwrite/api";
 import { IExpenses, INewUser } from "@/types";
 
@@ -68,5 +69,14 @@ export const useSignInAccount = () => {
 export const useSignOutAccount = () => {
   return useMutation({
     mutationFn: signOutAccount,
+  });
+};
+
+// TYPES
+
+export const useGetTypes = () => {
+  return useQuery({
+    queryKey: ["types"],
+    queryFn: fetchTypes,
   });
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Input } from "./input";
+import { Input } from "../../ui/input";
 import { Column, Row } from "@tanstack/react-table";
 import { IExpenses } from "@/types";
 import { useUpdateExpenses } from "@/lib/react-query/QueriesAndMuntations";

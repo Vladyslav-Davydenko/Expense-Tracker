@@ -1,7 +1,8 @@
 import { IExpenses } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import EditableCell from "@/components/ui/editable-cell";
+import EditableCell from "@/components/shared/Transactions/editable-cell";
 import clsx from "clsx";
+import ChoiceCell from "./choice-cell";
 
 export const columns: ColumnDef<IExpenses>[] = [
   {
@@ -11,19 +12,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "type.name",
     header: "Type",
-    cell: ({ row }) => {
-      const boxColor = row.original.type.color;
-      const boxClasses = clsx({
-        [boxColor]: true,
-        "w-[16px] h-[16px] rounded-sm": true,
-      });
-      return (
-        <div className="flex gap-2 justify-start items-center">
-          <div className={boxClasses}></div>
-          {`( ${row.original.type.name} )`}
-        </div>
-      );
-    },
+    cell: ChoiceCell,
   },
   {
     accessorKey: "description",
