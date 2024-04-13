@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Column, Row } from "@tanstack/react-table";
-import { IExpenses, IType } from "@/types";
+import { IExpenses } from "@/types";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -31,14 +31,11 @@ interface EditableCellProps {
   column: Column<IExpenses>;
 }
 
-export default function ChoiceCell({
-  getValue,
-  row,
-  column,
-}: EditableCellProps) {
+export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const initialValue = getValue();
   const [value, setValue] = useState(initialValue as string);
   const [open, setOpen] = useState(false);
+  const isMounted = useRef(false);
 
   const { data: types, isLoading: isTypesFetching } = useGetTypes();
   const { mutateAsync: updateExpense } = useUpdateExpenses();
@@ -46,6 +43,11 @@ export default function ChoiceCell({
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
+
+  useEffect(() => {
+    if (isMounted.current) handleChange();
+    else isMounted.current = true;
+  }, [value]);
 
   const defaultCell = (
     <Button
@@ -56,8 +58,12 @@ export default function ChoiceCell({
     >
       {value ? (
         <div className="flex gap-2 justify-start items-center">
-          <div className={`${row.original.type.color} w-[16px] h-[16px]`}></div>
-          {row.original.type.name}
+          <div
+            className={`${
+              row.original.type?.color ?? "white"
+            } w-[16px] h-[16px]`}
+          ></div>
+          {row.original.type?.name ?? "Test"}
         </div>
       ) : (
         "Select Type..."
@@ -111,7 +117,7 @@ export default function ChoiceCell({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[200px] p-0 bg-primary border-primary-dark">
         <Command>
           <CommandInput placeholder="Search types..." />
           <CommandEmpty>No types found.</CommandEmpty>
@@ -124,8 +130,8 @@ export default function ChoiceCell({
                   onSelect={() => {
                     setValue(type.name);
                     setOpen(false);
-                    handleChange();
                   }}
+                  className=" cursor-pointer hover:bg-secondary-4"
                 >
                   <Check
                     className={cn(
@@ -133,6 +139,7 @@ export default function ChoiceCell({
                       value === type.name ? "opacity-100" : "opacity-0"
                     )}
                   />
+                  <div className={`${type.color} w-[16px] h-[16px] mr-2`}></div>
                   {type.name}
                 </CommandItem>
               ))}
