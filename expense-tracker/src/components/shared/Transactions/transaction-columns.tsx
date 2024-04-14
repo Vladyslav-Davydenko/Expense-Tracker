@@ -6,6 +6,7 @@ import { IExpenses } from "@/types";
 import EditableCell from "./editable-cell";
 import ChoiceCell from "./choice-cell";
 import HiddenCell from "./hidden-cell";
+import DateTimeCell from "./date-time-cell";
 
 export const columns: ColumnDef<IExpenses>[] = [
   {
@@ -26,22 +27,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "date",
     header: () => <div className="text-start">Date</div>,
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("date"));
-      const formattedDate =
-        date.toLocaleDateString("en-US", {
-          weekday: "long",
-          month: "long",
-          day: "numeric",
-        }) +
-        ", " +
-        date.toLocaleString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-        });
-      return <div>{formattedDate}</div>;
-    },
+    cell: DateTimeCell,
   },
   {
     accessorKey: "amount",

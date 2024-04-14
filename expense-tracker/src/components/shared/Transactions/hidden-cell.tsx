@@ -6,7 +6,7 @@ interface HiddenCellProps {
 
 export default function HiddenCell({ getValue }: HiddenCellProps) {
   const id = getValue() as string;
-  const hidden = "******************************";
+  const hidden = "***********************************";
   const [showId, setShowId] = useState(false);
 
   const handleMouseOver = () => {
