@@ -10,6 +10,7 @@ import {
   Statistics,
   Goals,
   Transactions,
+  Tests,
 } from "./pages/_root";
 import { Toaster } from "./components/ui/toaster";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/goals" element={<Goals />} />
           <Route path="/investments" element={<Investments />} />
+          <Route path="/tests" element={<Tests count={0} />} />
         </Route>
       </Routes>
 

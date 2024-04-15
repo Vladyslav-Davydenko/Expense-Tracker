@@ -9,6 +9,10 @@ interface HomeProps {
 const Home = ({ count }: HomeProps) => {
   const [counter, setCounter] = useState<number>(count);
 
+  function test() {
+    return "asc";
+  }
+
   const handleIncrementByOne = () => {
     setCounter((prev) => prev + 1);
   };
@@ -44,6 +48,7 @@ const Home = ({ count }: HomeProps) => {
           Increment by 5
         </Button>
       </div>
+      <div>{{ asc: "t", desc: "r" }[test()]}</div>
     </div>
   );
 };
