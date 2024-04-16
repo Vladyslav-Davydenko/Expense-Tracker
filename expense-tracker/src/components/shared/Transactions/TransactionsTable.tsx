@@ -17,7 +17,7 @@ export default function TransactionsTable({
   }
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={expenses} />
+      <DataTable columns={columns} data={expenses} isNotDashboard={true} />
     </div>
   );
 }
