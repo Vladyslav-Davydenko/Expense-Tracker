@@ -18,11 +18,19 @@ export const columns: ColumnDef<IExpenses>[] = [
     accessorKey: "type.name",
     header: "Type",
     cell: ChoiceCell,
+    enableColumnFilter: true,
+    filterFn: (row, columnId, filterTypes) => {
+      const type = row.getValue(columnId);
+      console.log(type);
+      return true;
+    },
   },
   {
     accessorKey: "description",
     header: () => <div className="text-start pl-[12px]">Description</div>,
     cell: EditableCell,
+    enableColumnFilter: true,
+    filterFn: "includesString",
   },
   {
     accessorKey: "date",

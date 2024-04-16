@@ -1,8 +1,8 @@
-import { Input } from "./input";
+import { Input } from "../../ui/input";
 
-import { IColumnFilters } from "./data-table";
+import { IColumnFilters } from "../../ui/data-table";
 
-interface setColumnFilters {
+interface ColumnFiltersProps {
   columnFilters: IColumnFilters[];
   setColumnFilters: React.Dispatch<React.SetStateAction<IColumnFilters[]>>;
 }
@@ -10,7 +10,7 @@ interface setColumnFilters {
 export default function ColumnFilter({
   columnFilters,
   setColumnFilters,
-}: setColumnFilters) {
+}: ColumnFiltersProps) {
   const taskName =
     columnFilters.find((cf) => cf.id === "description")?.value || "";
 

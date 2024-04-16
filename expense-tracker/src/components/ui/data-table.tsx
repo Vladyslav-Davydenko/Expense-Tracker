@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import ColumnFilter from "./column-filter";
+import ColumnFilter from "../shared/Transactions/column-filter";
 
 import {
   Table,
@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import TypeFilter from "../shared/Transactions/type-filter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -26,7 +27,7 @@ interface DataTableProps<TData, TValue> {
 
 export interface IColumnFilters {
   id: string;
-  value: string;
+  value: string | string[];
 }
 
 function DataTable<TData, TValue>({
@@ -48,10 +49,16 @@ function DataTable<TData, TValue>({
   return (
     <>
       {isNotDashboard && (
-        <ColumnFilter
-          columnFilters={columnFilters}
-          setColumnFilters={setColumnFilters}
-        />
+        <div className="flex gap-4 ">
+          <ColumnFilter
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
+          <TypeFilter
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
+        </div>
       )}
       <div className="rounded-md border">
         <Table>
