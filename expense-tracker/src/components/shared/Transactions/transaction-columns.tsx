@@ -19,10 +19,10 @@ export const columns: ColumnDef<IExpenses>[] = [
     header: "Type",
     cell: ChoiceCell,
     enableColumnFilter: true,
-    filterFn: (row, columnId, filterTypes) => {
-      const type = row.getValue(columnId);
-      console.log(type);
-      return true;
+    filterFn: (row, columnId, filterTypes: string[]) => {
+      if (filterTypes.length <= 0) return true;
+      const type = row.getValue(columnId) as string;
+      return filterTypes.includes(type);
     },
   },
   {

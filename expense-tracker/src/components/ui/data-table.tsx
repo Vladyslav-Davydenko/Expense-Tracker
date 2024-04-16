@@ -50,10 +50,12 @@ function DataTable<TData, TValue>({
     <>
       {isNotDashboard && (
         <div className="flex gap-4 ">
-          <ColumnFilter
-            columnFilters={columnFilters}
-            setColumnFilters={setColumnFilters}
-          />
+          <div className="flex-1 justify-center items-center">
+            <ColumnFilter
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFilters}
+            />
+          </div>
           <TypeFilter
             columnFilters={columnFilters}
             setColumnFilters={setColumnFilters}

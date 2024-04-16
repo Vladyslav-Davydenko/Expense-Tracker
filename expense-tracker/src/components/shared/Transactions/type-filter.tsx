@@ -4,7 +4,7 @@ import { useGetTypes } from "@/lib/react-query/QueriesAndMuntations";
 
 import { cn } from "@/lib/utils";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -40,10 +40,14 @@ export default function TypeFilter({
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between hover:bg-primary"
+          className="w-[100px] justify-between bg-primary hover:bg-primary-light"
         >
-          "Select Type..."
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <img
+            src="/assets/icons/filter.svg"
+            alt="filter"
+            className="w-[20px] h-[20px]"
+          />
+          Types
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0 bg-primary border-primary-dark">
@@ -69,7 +73,7 @@ export default function TypeFilter({
                       }
 
                       return prev.map((f) => {
-                        if (f.id === "status") {
+                        if (f.id === "type_name") {
                           return {
                             ...f,
                             value: types.includes(type.name)
@@ -87,7 +91,7 @@ export default function TypeFilter({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      columnFilters.find((cf) => cf.value === type.name)
+                      columnFilters.find((cf) => cf.value.includes(type.name))
                         ? "opacity-100"
                         : "opacity-0"
                     )}
