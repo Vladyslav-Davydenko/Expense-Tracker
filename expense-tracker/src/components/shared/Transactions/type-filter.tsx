@@ -47,7 +47,7 @@ export default function TypeFilter({
             alt="filter"
             className="w-[20px] h-[20px]"
           />
-          Types
+          Filter
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0 bg-primary border-primary-dark">

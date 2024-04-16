@@ -16,7 +16,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "type.name",
-    header: "Type",
+    header: () => <div className="text-start pl-[12px]">Type</div>,
     cell: ChoiceCell,
     enableColumnFilter: true,
     filterFn: (row, columnId, filterTypes: string[]) => {
@@ -34,7 +34,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "date",
-    header: () => <div className="text-start">Date</div>,
+    header: () => <div className="text-start pl-[12px]">Date</div>,
     cell: DateTimeCell,
   },
   {
@@ -48,7 +48,7 @@ export const columns: ColumnDef<IExpenses>[] = [
       }).format(amount);
       const isSpent = row.original.isSpent ? "-" : "+";
       const cellClassName = clsx({
-        "text-right font-medium": true,
+        "text-right font-medium min-w-[100px]": true,
         "text-red-500": row.original.isSpent,
         "text-green-500": !row.original.isSpent,
       });
