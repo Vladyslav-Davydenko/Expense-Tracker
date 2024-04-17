@@ -11,6 +11,7 @@ import DateTimeCell from "./date-time-cell";
 export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "$id",
+    enableSorting: false,
     header: () => <div>Expense's ID</div>,
     cell: HiddenCell,
   },
@@ -18,6 +19,7 @@ export const columns: ColumnDef<IExpenses>[] = [
     accessorKey: "type.name",
     header: () => <div className="text-start pl-[12px]">Type</div>,
     cell: ChoiceCell,
+    enableSorting: false,
     enableColumnFilter: true,
     filterFn: (row, columnId, filterTypes: string[]) => {
       if (filterTypes.length <= 0) return true;
@@ -40,6 +42,19 @@ export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
+    sortingFn: (rowA, rowB, columnId) => {
+      const amountA = rowA.getValue(columnId) as number;
+      const amountB = rowB.getValue(columnId) as number;
+      const isSpentA = rowA.original.isSpent;
+      const isSpentB = rowB.original.isSpent;
+      const formatedAmountA = isSpentA ? amountA * -1 : amountA;
+      const formatedAmountB = isSpentB ? amountB * -1 : amountB;
+      return formatedAmountA > formatedAmountB
+        ? 1
+        : formatedAmountA < formatedAmountB
+        ? -1
+        : 0;
+    },
     cell: ({ row }) => {
       const amount = Number(row.getValue("amount")) / 100;
       const formatted = new Intl.NumberFormat("en-US", {

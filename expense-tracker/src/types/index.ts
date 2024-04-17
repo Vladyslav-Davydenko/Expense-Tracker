@@ -25,8 +25,8 @@ export interface IType extends Models.Document {
   color: string;
 }
 
-export interface INewExpenses {
-  type: IType;
+export interface INewExpenses extends Models.Document {
+  type: string;
   amount: number;
   description: string;
   isSpent: boolean;

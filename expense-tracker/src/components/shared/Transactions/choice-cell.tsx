@@ -76,15 +76,9 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   );
 
   const handleChange = async () => {
-    const newType = {
-      ...row.original.type,
-      name: value,
-      color: types?.find((type) => type.name === value)?.color ?? "white",
-    };
-
     const newExpense = {
       ...row.original,
-      type: newType,
+      type: types?.find((type) => type.name === value)?.$id || "",
     };
 
     const expense = await updateExpense(newExpense);

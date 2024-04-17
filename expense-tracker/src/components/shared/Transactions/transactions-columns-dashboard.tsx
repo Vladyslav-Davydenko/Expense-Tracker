@@ -6,6 +6,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "type.name",
     header: "Type",
+    enableSorting: false,
     cell: ({ row }) => {
       const boxColor = row.original.type.color;
       const boxClasses = clsx({
@@ -17,10 +18,12 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "description",
+    enableSorting: false,
     header: () => <div className="text-center">Description</div>,
   },
   {
     accessorKey: "date",
+    enableSorting: false,
     header: () => <div className="text-center">Date</div>,
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
@@ -30,6 +33,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "amount",
+    enableSorting: false,
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = Number(row.getValue("amount")) / 100;
