@@ -3,11 +3,14 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
 import ColumnFilter from "../shared/Transactions/column-filter";
+
+import Pagination from "../shared/Pagination/Pagination";
 
 import {
   Table,
@@ -43,8 +46,15 @@ function DataTable<TData, TValue>({
     state: {
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageIndex: 0, //custom initial page index
+        pageSize: 10, //custom default page size
+      },
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
 
@@ -124,6 +134,15 @@ function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      {isNotDashboard && (
+        <Pagination
+          currentPage={table.getState().pagination.pageIndex + 1}
+          totalPages={table.getPageCount()}
+          previousPage={table.previousPage}
+          nextPage={table.nextPage}
+          setPageIndex={table.setPageIndex}
+        />
+      )}
     </>
   );
 }
