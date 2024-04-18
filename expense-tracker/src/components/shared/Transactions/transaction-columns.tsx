@@ -8,6 +8,8 @@ import ChoiceCell from "./choice-cell";
 import HiddenCell from "./hidden-cell";
 import DateTimeCell from "./date-time-cell";
 
+import TransactionColumnsMethods from "./transaction-columns-methods";
+
 export const columns: ColumnDef<IExpenses>[] = [
   {
     accessorKey: "$id",
@@ -41,7 +43,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-start pl-[12px]">Amount</div>,
     sortingFn: (rowA, rowB, columnId) => {
       const amountA = rowA.getValue(columnId) as number;
       const amountB = rowB.getValue(columnId) as number;
@@ -63,11 +65,12 @@ export const columns: ColumnDef<IExpenses>[] = [
       }).format(amount);
       const isSpent = row.original.isSpent ? "-" : "+";
       const cellClassName = clsx({
-        "text-right font-medium min-w-[100px]": true,
+        "text-left font-medium min-w-[100px]": true,
         "text-red-500": row.original.isSpent,
         "text-green-500": !row.original.isSpent,
       });
       return <div className={cellClassName}>{`${isSpent} ${formatted}`}</div>;
     },
   },
+  TransactionColumnsMethods(),
 ];
