@@ -8,13 +8,13 @@ import { Input } from "../../ui/input";
 import { Column, Row } from "@tanstack/react-table";
 
 interface EditableCellProps {
-  getValue: () => string;
+  getValue: () => unknown;
   row: Row<IExpenses>;
   column: Column<IExpenses>;
 }
 
 const EditableCell = ({ getValue, row, column }: EditableCellProps) => {
-  const initialValue = getValue();
+  const initialValue = getValue() as string;
 
   const { toast } = useToast();
   const [value, setValue] = useState(initialValue);

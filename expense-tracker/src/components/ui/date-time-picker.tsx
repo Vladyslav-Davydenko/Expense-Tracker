@@ -63,7 +63,7 @@ export function DateTimePicker({ initialDate, expense }: DateTimePickerProps) {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal border-0 hover:bg-primary",
+            "w-full justify-start text-left font-normal border-0 hover:bg-primary",
             !date && "text-muted-foreground"
           )}
         >

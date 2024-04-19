@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/popover";
 
 interface EditableCellProps {
-  getValue: () => string;
+  getValue: () => unknown;
   row: Row<IExpenses>;
   column: Column<IExpenses>;
 }
@@ -105,14 +105,14 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between hover:bg-primary"
+          className="w-full max-w-[200px] justify-between hover:bg-primary"
         >
           {value ? (
             <div className="flex gap-2 justify-start items-center">
               <div
                 className={`${
                   types.find((type) => type.name === value)?.color
-                } w-[16px] h-[16px]`}
+                } w-[16px] h-[16px] overflow-hidden`}
               ></div>
               {`${types.find((type) => type.name === value)?.name}`}
             </div>

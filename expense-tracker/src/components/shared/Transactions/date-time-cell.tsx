@@ -3,7 +3,7 @@ import { IExpenses } from "@/types";
 import { Row } from "@tanstack/react-table";
 
 interface DateTimeCellProps {
-  getValue: () => string;
+  getValue: () => unknown;
   row: Row<IExpenses>;
 }
 
@@ -11,7 +11,7 @@ export default function DateTimeCellProps({
   getValue,
   row,
 }: DateTimeCellProps) {
-  const initialDate = new Date(getValue());
+  const initialDate = new Date(getValue() as string);
   const expense = row.original;
   return (
     <DateTimePicker

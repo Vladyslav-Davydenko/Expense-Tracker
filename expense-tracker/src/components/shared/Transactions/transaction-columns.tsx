@@ -43,7 +43,7 @@ export const columns: ColumnDef<IExpenses>[] = [
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-start pl-[12px]">Amount</div>,
+    header: () => <div className="text-start">Amount</div>,
     sortingFn: (rowA, rowB, columnId) => {
       const amountA = rowA.getValue(columnId) as number;
       const amountB = rowB.getValue(columnId) as number;
