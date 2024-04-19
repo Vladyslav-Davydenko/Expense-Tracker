@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { IExpenses } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import Confirmation from "../Dialog/Confirmation";
 
 const TransactionColumnsMethods = () => {
   const handleRemoveButtonClick = (id: string) => {
@@ -16,19 +16,9 @@ const TransactionColumnsMethods = () => {
 
       const id = item.$id.toString();
       return (
-        <div className="table-action-button-group">
-          <Button
-            id={id}
-            variant="ghost"
-            onClick={() => handleRemoveButtonClick(id)}
-          >
-            <img
-              src="/assets/icons/cross.svg"
-              alt="delete"
-              className="w-[20px] h-[20px]"
-            />
-          </Button>
-        </div>
+        <>
+          <Confirmation action={() => handleRemoveButtonClick(id)} />
+        </>
       );
     },
   } as ColumnDef<IExpenses>;
