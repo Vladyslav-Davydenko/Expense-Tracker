@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 interface HiddenCellProps {
-  getValue: () => any;
+  getValue: () => string;
 }
 
 export default function HiddenCell({ getValue }: HiddenCellProps) {
-  const id = getValue() as string;
+  const id = getValue();
   const hidden = "***********************************";
   const [showId, setShowId] = useState(false);
 

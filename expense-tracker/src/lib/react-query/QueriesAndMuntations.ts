@@ -8,7 +8,7 @@ import {
   updateExpenses,
   fetchTypes,
 } from "../appwrite/api";
-import { INewExpenses, INewUser } from "@/types";
+import { IExpenses, INewExpenses, INewUser } from "@/types";
 
 // EXPENSES
 
@@ -29,8 +29,9 @@ export const useGetExpenses = () => {
 export const useUpdateExpenses = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (newExpense: INewExpenses) => updateExpenses(newExpense),
-    onMutate: async (_newTodo) => {
+    mutationFn: (newExpense: INewExpenses | IExpenses) =>
+      updateExpenses(newExpense),
+    onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["expenses"] });
 
       // Snapshot the previous value

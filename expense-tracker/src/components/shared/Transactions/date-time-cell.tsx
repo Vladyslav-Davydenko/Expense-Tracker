@@ -3,7 +3,7 @@ import { IExpenses } from "@/types";
 import { Row } from "@tanstack/react-table";
 
 interface DateTimeCellProps {
-  getValue: () => any;
+  getValue: () => string;
   row: Row<IExpenses>;
 }
 

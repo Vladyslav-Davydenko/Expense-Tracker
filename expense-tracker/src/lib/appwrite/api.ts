@@ -137,7 +137,7 @@ export async function fetchExpenses() {
   return expenses.documents as IExpenses[];
 }
 
-export async function updateExpenses(newExpense: INewExpenses) {
+export async function updateExpenses(newExpense: INewExpenses | IExpenses) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) throw Error;

@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/popover";
 
 interface EditableCellProps {
-  getValue: () => any;
+  getValue: () => string;
   row: Row<IExpenses>;
   column: Column<IExpenses>;
 }
@@ -37,7 +37,7 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
 
   const { toast } = useToast();
   const isMounted = useRef(false);
-  const [value, setValue] = useState(initialValue as string);
+  const [value, setValue] = useState(initialValue);
   const [open, setOpen] = useState(false);
 
   const { data: types, isLoading: isTypesFetching } = useGetTypes();

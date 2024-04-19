@@ -8,7 +8,7 @@ import { Input } from "../../ui/input";
 import { Column, Row } from "@tanstack/react-table";
 
 interface EditableCellProps {
-  getValue: () => any;
+  getValue: () => string;
   row: Row<IExpenses>;
   column: Column<IExpenses>;
 }
@@ -17,7 +17,7 @@ const EditableCell = ({ getValue, row, column }: EditableCellProps) => {
   const initialValue = getValue();
 
   const { toast } = useToast();
-  const [value, setValue] = useState(initialValue as string);
+  const [value, setValue] = useState(initialValue);
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 
   const handleOnBlur = async () => {
