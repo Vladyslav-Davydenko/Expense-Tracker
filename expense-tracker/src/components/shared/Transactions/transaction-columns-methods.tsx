@@ -1,11 +1,8 @@
 import { IExpenses } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import Confirmation from "../Dialog/Confirmation";
+import ConfirmationToDelete from "../Dialog/ConfirmationToDelete";
 
 const TransactionColumnsMethods = () => {
-  const handleRemoveButtonClick = (id: string) => {
-    console.log("deleted: " + id);
-  };
   return {
     accessor: "action",
     header: "",
@@ -17,7 +14,7 @@ const TransactionColumnsMethods = () => {
       const id = item.$id.toString();
       return (
         <>
-          <Confirmation action={() => handleRemoveButtonClick(id)} />
+          <ConfirmationToDelete id={id} />
         </>
       );
     },

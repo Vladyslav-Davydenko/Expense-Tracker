@@ -156,11 +156,25 @@ export async function updateExpenses(newExpense: INewExpenses | IExpenses) {
     }
   );
 
-  console.log(expense, newExpense.type);
-
   if (!expense) throw Error;
 
   return expense as IExpenses;
+}
+
+export async function deleteExpenses(id: string) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const result = await databases.deleteDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.expenseCollectionId,
+    id
+  );
+
+  if (!result) throw Error;
+
+  return id;
 }
 
 // TYPES

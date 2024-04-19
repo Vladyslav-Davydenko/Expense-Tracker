@@ -8,11 +8,30 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
-interface ConfirmationProps {
-  action: () => void;
+import { useDeleteExpenses } from "@/lib/react-query/QueriesAndMuntations";
+import { useToast } from "@/components/ui/use-toast";
+
+interface ConfirmationToDeleteProps {
+  id: string;
 }
 
-const Confirmation = ({ action }: ConfirmationProps) => {
+const ConfirmationToDelete = ({ id }: ConfirmationToDeleteProps) => {
+  const { mutateAsync: deleteExpenses } = useDeleteExpenses();
+  const { toast } = useToast();
+  const handleRemoveButtonClick = async (id: string) => {
+    const result = await deleteExpenses(id);
+    console.log("deleted: " + result);
+
+    if (!result) {
+      return toast({
+        title: "Deletion failed. Please try again.",
+      });
+    }
+
+    return toast({
+      title: "Deleted successfully.",
+    });
+  };
   return (
     <Dialog>
       <DialogTrigger>
@@ -31,7 +50,7 @@ const Confirmation = ({ action }: ConfirmationProps) => {
           </DialogDescription>
         </DialogHeader>
         <DialogClose
-          onClick={action}
+          onClick={() => handleRemoveButtonClick(id)}
           className=" text-red-500 font-semibold tracking-wider uppercase pt-4"
         >
           Delete
@@ -41,4 +60,4 @@ const Confirmation = ({ action }: ConfirmationProps) => {
   );
 };
 
-export default Confirmation;
+export default ConfirmationToDelete;
