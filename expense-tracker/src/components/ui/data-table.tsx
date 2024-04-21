@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import TypeFilter from "../shared/Transactions/type-filter";
+import { Button } from "./button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -61,17 +62,34 @@ function DataTable<TData, TValue>({
   return (
     <>
       {isNotDashboard && (
-        <div className="flex gap-4 ">
-          <div className="flex-1 justify-center items-center">
+        <div className="grid grid-cols-6 gap-4 mb-8">
+          <div className="flex-1 col-span-2">
             <ColumnFilter
               columnFilters={columnFilters}
               setColumnFilters={setColumnFilters}
             />
           </div>
-          <TypeFilter
-            columnFilters={columnFilters}
-            setColumnFilters={setColumnFilters}
-          />
+          <div>
+            <TypeFilter
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFilters}
+            />
+          </div>
+          <div />
+          <div className="flex justify-end items-center gap-4 col-span-2">
+            <Button
+              variant="ghost"
+              className="bg-primary hover:bg-primary-light"
+            >
+              Create new type
+            </Button>
+            <Button
+              variant="ghost"
+              className="bg-primary hover:bg-primary-light"
+            >
+              Create new expense
+            </Button>
+          </div>
         </div>
       )}
       <div className="rounded-md border">

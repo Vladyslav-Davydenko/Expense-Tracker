@@ -25,7 +25,7 @@ export default function ColumnFilter({
     );
 
   return (
-    <div className="mb-4 relative flex justify-center items-center">
+    <div className="relative flex justify-center items-center">
       <img
         src="/assets/icons/search.svg"
         alt="search"

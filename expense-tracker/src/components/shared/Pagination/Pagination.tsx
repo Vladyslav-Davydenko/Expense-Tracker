@@ -19,7 +19,7 @@ export default function Pagination({
   const allPages = generatePagination(currentPage, totalPages);
   return (
     <>
-      <div className="flex justify-center items-center mt-4">
+      <div className="flex justify-center items-center mt-8">
         {allPages.length > 0 && (
           <PaginationArrow
             direction="left"
