@@ -46,7 +46,7 @@ const ConfirmationToDelete = ({ id }: ConfirmationToDeleteProps) => {
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription className="pt-4">
             This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            transaction and remove this data from our servers.
           </DialogDescription>
         </DialogHeader>
         <DialogClose

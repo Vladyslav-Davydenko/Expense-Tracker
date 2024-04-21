@@ -1,7 +1,8 @@
 import { IExpenses } from "@/types";
 import { columns } from "./transactions-columns-dashboard";
 import DataTable from "@/components/ui/data-table";
-import Loader from "../Loader";
+
+import { TableDashBoardSceleton } from "../Sceletons";
 
 interface TransactionsTableDashboardProps {
   expenses: IExpenses[];
@@ -13,7 +14,7 @@ export default function TransactionsTableDashboard({
   isLoading,
 }: TransactionsTableDashboardProps) {
   if (isLoading) {
-    return <Loader />;
+    return <TableDashBoardSceleton />;
   }
   return (
     <div className="container mx-auto py-10">

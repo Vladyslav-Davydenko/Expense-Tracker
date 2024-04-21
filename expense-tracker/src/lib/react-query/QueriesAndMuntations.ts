@@ -4,7 +4,6 @@ import {
   signInAccount,
   signOutAccount,
   fetchExpenses,
-  fetchLatestExpenses,
   updateExpenses,
   fetchTypes,
   deleteExpenses,
@@ -12,13 +11,6 @@ import {
 import { IExpenses, INewExpenses, INewUser } from "@/types";
 
 // EXPENSES
-
-export const useGetLatestExpenses = () => {
-  return useQuery({
-    queryKey: ["expenses"],
-    queryFn: fetchLatestExpenses,
-  });
-};
 
 export const useGetExpenses = () => {
   return useQuery({

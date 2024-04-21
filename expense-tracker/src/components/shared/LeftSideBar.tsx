@@ -2,10 +2,11 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { INavLink } from "@/types";
 import { sidebarLinks } from "@/constants";
-import Loader from "@/components/shared/Loader";
 import { Button } from "@/components/ui/button";
 import { useSignOutAccount } from "@/lib/react-query/QueriesAndMuntations";
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
+
+import { ProfileSceleton } from "./Sceletons";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const LeftSidebar = () => {
 
         {isLoading || !user.email ? (
           <div className="h-14">
-            <Loader />
+            <ProfileSceleton />
           </div>
         ) : (
           <Link

@@ -56,8 +56,7 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
     <Button
       variant="ghost"
       role="combobox"
-      aria-expanded={open}
-      className="w-[200px] justify-between"
+      className="w-full max-w-[200px] justify-between hover:bg-primary"
     >
       {value ? (
         <div className="flex gap-2 justify-start items-center">

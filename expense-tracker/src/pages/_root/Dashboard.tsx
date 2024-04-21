@@ -1,14 +1,13 @@
-import { useGetLatestExpenses } from "@/lib/react-query/QueriesAndMuntations";
+import { useGetExpenses } from "@/lib/react-query/QueriesAndMuntations";
 
 import TransactionsTable from "@/components/shared/Transactions/TransactionsTableDashboard";
 
 const Dashboard = () => {
-  const { data: expenses, isLoading: isExpensesLoading } =
-    useGetLatestExpenses();
+  const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
   return (
     <div>
       <TransactionsTable
-        expenses={expenses || []}
+        expenses={expenses?.slice(0, 4) || []}
         isLoading={isExpensesLoading}
       />
     </div>
