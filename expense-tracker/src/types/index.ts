@@ -34,7 +34,7 @@ export interface IType extends Models.Document {
 export interface INewExpenses extends Models.Document {
   type: string;
   amount: number;
-  description: string;
+  description?: string;
   isSpent: boolean;
 }
 

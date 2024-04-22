@@ -60,7 +60,7 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-primary;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] min-h-dvh h-full bg-primary;
   }
 
   .leftsidebar-link {

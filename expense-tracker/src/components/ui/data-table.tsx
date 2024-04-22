@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   ColumnDef,
   flexRender,
@@ -9,7 +11,8 @@ import {
 } from "@tanstack/react-table";
 
 import ColumnFilter from "../shared/Transactions/Filters/column-filter";
-
+import CreateExpense from "../shared/Dialog/CreateExpense";
+import TypeFilter from "../shared/Transactions/Filters/type-filter";
 import Pagination from "../shared/Pagination/Pagination";
 
 import {
@@ -20,9 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import TypeFilter from "../shared/Transactions/Filters/type-filter";
-import { Button } from "./button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,7 +50,7 @@ function DataTable<TData, TValue>({
     initialState: {
       pagination: {
         pageIndex: 0, //custom initial page index
-        pageSize: 10, //custom default page size
+        pageSize: 8, //custom default page size
       },
     },
     getCoreRowModel: getCoreRowModel(),
@@ -75,20 +75,9 @@ function DataTable<TData, TValue>({
               setColumnFilters={setColumnFilters}
             />
           </div>
-          <div />
-          <div className="flex justify-end items-center gap-4 col-span-2">
-            <Button
-              variant="ghost"
-              className="bg-primary hover:bg-primary-light"
-            >
-              Create new type
-            </Button>
-            <Button
-              variant="ghost"
-              className="bg-primary hover:bg-primary-light"
-            >
-              Create new expense
-            </Button>
+          <div className="col-span-2" />
+          <div className="flex justify-end items-center gap-4">
+            <CreateExpense />
           </div>
         </div>
       )}

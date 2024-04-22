@@ -21,3 +21,13 @@ export const SigninValidation = z.object({
     .string()
     .min(8, { message: "Password should be at least 8 characters." }),
 });
+
+export const CreateExpenseValidation = z.object({
+  type: z.string(),
+  amount: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10) * 100,
+    z.number().positive("Amount must be a positive number").finite()
+  ),
+  description: z.string().max(255, "Description is too long"),
+  isSpent: z.boolean(),
+});

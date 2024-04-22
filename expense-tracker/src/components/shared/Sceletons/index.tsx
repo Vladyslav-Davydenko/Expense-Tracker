@@ -5,8 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const TableSceleton = () => {
   return (
     <div className="container mx-auto py-10">
-      <div className="flex gap-4 ">
-        <div className="flex-1 justify-center items-center">
+      <div className="grid grid-cols-6 gap-4 mb-8">
+        <div className="flex-1 col-span-2">
           <div className="mb-4 relative flex justify-center items-center">
             <img
               src="/assets/icons/search.svg"
@@ -19,18 +19,29 @@ export const TableSceleton = () => {
             />
           </div>
         </div>
-        <Button
-          variant="ghost"
-          role="combobox"
-          className="w-[100px] justify-between bg-primary hover:bg-primary-light"
-        >
-          <img
-            src="/assets/icons/filter.svg"
-            alt="filter"
-            className="w-[20px] h-[20px]"
-          />
-          Filter
-        </Button>
+        <div>
+          <Button
+            variant="ghost"
+            role="combobox"
+            className="w-[100px] justify-between bg-primary hover:bg-primary-light"
+          >
+            <img
+              src="/assets/icons/filter.svg"
+              alt="filter"
+              className="w-[20px] h-[20px]"
+            />
+            Filter
+          </Button>
+        </div>
+        <div className="col-span-2" />
+        <div className="flex justify-end gap-4">
+          <Button
+            variant="ghost"
+            className="bg-primary hover:bg-primary-light text-md"
+          >
+            Create new expense
+          </Button>
+        </div>
       </div>
       <Skeleton className="w-[100%] h-[85%] rounded-sm bg-primary" />
       <div className="flex justify-center items-center mt-4">
