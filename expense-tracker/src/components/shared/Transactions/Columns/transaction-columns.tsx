@@ -3,10 +3,10 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { IExpenses } from "@/types";
 
-import EditableCell from "./editable-cell";
-import ChoiceCell from "./choice-cell";
-import HiddenCell from "./hidden-cell";
-import DateTimeCell from "./date-time-cell";
+import EditableCell from "../Cells/editable-cell";
+import ChoiceCell from "../Cells/choice-cell";
+import HiddenCell from "../Cells/hidden-cell";
+import DateTimeCell from "../Cells/date-time-cell";
 
 import TransactionColumnsMethods from "./transaction-columns-methods";
 

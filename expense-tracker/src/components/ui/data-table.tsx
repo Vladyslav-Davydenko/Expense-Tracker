@@ -8,7 +8,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import ColumnFilter from "../shared/Transactions/column-filter";
+import ColumnFilter from "../shared/Transactions/Filters/column-filter";
 
 import Pagination from "../shared/Pagination/Pagination";
 
@@ -21,7 +21,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import TypeFilter from "../shared/Transactions/type-filter";
+import TypeFilter from "../shared/Transactions/Filters/type-filter";
 import { Button } from "./button";
 
 interface DataTableProps<TData, TValue> {

@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 
-import { IExpenses, INewExpenses, INewUser, IType } from "@/types";
+import { IExpenses, INewExpenses, INewType, INewUser, IType } from "@/types";
 import { account, appwriteConfig, databases } from "./config";
 
 // USER
@@ -119,6 +119,30 @@ export async function fetchExpenses() {
   return expenses.documents as IExpenses[];
 }
 
+export async function createExpenses(newExpense: INewExpenses) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const createdExpense = await databases.createDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.expenseCollectionId,
+    ID.unique(),
+    {
+      owner: currentUser.$id,
+      type: newExpense.type,
+      date: new Date().toISOString(),
+      amount: newExpense.amount,
+      description: newExpense.description,
+      isSpent: newExpense.isSpent,
+    }
+  );
+
+  if (!createdExpense) throw Error;
+
+  return createdExpense as IExpenses;
+}
+
 export async function updateExpenses(newExpense: INewExpenses | IExpenses) {
   const currentUser = await getCurrentUser();
 
@@ -177,4 +201,41 @@ export async function fetchTypes() {
   }
 
   return expenses.documents as IType[];
+}
+
+export async function createTypes(newType: INewType) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const createdType = await databases.createDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.typeCollectionId,
+    ID.unique(),
+    {
+      name: newType.name,
+      color: newType.color,
+      owner: currentUser.$id,
+    }
+  );
+
+  if (!createdType) throw Error;
+
+  return createdType as IType;
+}
+
+export async function deleteType(id: string) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const result = await databases.deleteDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.typeCollectionId,
+    id
+  );
+
+  if (!result) throw Error;
+
+  return id;
 }

@@ -4,11 +4,13 @@ import {
   signInAccount,
   signOutAccount,
   fetchExpenses,
+  createExpenses,
   updateExpenses,
   fetchTypes,
+  createTypes,
   deleteExpenses,
 } from "../appwrite/api";
-import { IExpenses, INewExpenses, INewUser } from "@/types";
+import { IExpenses, INewExpenses, INewType, INewUser, IType } from "@/types";
 
 // EXPENSES
 
@@ -35,7 +37,6 @@ export const useUpdateExpenses = () => {
     },
 
     onError: (_err, _newExpenses, context) => {
-      console.log(context?.previousExpenses);
       queryClient.setQueryData(["expenses"], context?.previousExpenses);
     },
     // Always refetch after error or success:
@@ -65,9 +66,32 @@ export const useDeleteExpenses = () => {
     onError: (_err, _newExpenses, context) => {
       queryClient.setQueryData(["expenses"], context?.previousExpenses);
     },
-    // onSettled: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["expenses"] });
-    // },
+  });
+};
+
+export const useCreateExpenses = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newExpense: INewExpenses) => createExpenses(newExpense),
+    onMutate: async (newExpense) => {
+      await queryClient.cancelQueries({ queryKey: ["expenses"] });
+
+      // Snapshot the previous value
+      const previousExpenses = queryClient.getQueryData(["expenses"]);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(["expenses"], (old: IExpenses[]) => [
+        ...old,
+        newExpense,
+      ]);
+
+      // Return a context object with the snapshotted value
+      return { previousExpenses };
+    },
+
+    onError: (_err, _newExpenses, context) => {
+      queryClient.setQueryData(["expenses"], context?.previousExpenses);
+    },
   });
 };
 
@@ -98,5 +122,28 @@ export const useGetTypes = () => {
   return useQuery({
     queryKey: ["types"],
     queryFn: fetchTypes,
+  });
+};
+
+export const useCreateType = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (newType: INewType) => createTypes(newType),
+    onMutate: async (newType) => {
+      await queryClient.cancelQueries({ queryKey: ["types"] });
+
+      // Snapshot the previous value
+      const previuosTypes = queryClient.getQueryData(["types"]);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(["types"], (old: IType[]) => [...old, newType]);
+
+      // Return a context object with the snapshotted value
+      return { previuosTypes };
+    },
+
+    onError: (_err, _newExpenses, context) => {
+      queryClient.setQueryData(["types"], context?.previuosTypes);
+    },
   });
 };

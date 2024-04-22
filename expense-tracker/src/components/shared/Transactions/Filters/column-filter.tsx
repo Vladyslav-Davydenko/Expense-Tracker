@@ -1,6 +1,6 @@
-import { Input } from "../../ui/input";
+import { Input } from "../../../ui/input";
 
-import { IColumnFilters } from "../../ui/data-table";
+import { IColumnFilters } from "../../../ui/data-table";
 
 interface ColumnFiltersProps {
   columnFilters: IColumnFilters[];

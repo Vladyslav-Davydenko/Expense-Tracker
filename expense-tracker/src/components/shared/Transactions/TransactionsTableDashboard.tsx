@@ -1,5 +1,5 @@
 import { IExpenses } from "@/types";
-import { columns } from "./transactions-columns-dashboard";
+import { columns } from "./Columns/transactions-columns-dashboard";
 import DataTable from "@/components/ui/data-table";
 
 import { TableDashBoardSceleton } from "../Sceletons";

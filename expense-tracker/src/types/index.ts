@@ -20,9 +20,15 @@ export type IUser = {
   email: string;
 };
 
+export interface INewType {
+  name: string;
+  color: string;
+}
+
 export interface IType extends Models.Document {
   name: string;
   color: string;
+  owner: string;
 }
 
 export interface INewExpenses extends Models.Document {

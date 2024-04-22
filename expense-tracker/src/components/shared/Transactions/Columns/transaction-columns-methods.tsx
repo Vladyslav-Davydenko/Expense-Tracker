@@ -1,6 +1,6 @@
 import { IExpenses } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import ConfirmationToDelete from "../Dialog/ConfirmationToDelete";
+import ConfirmationToDelete from "../../Dialog/ConfirmationToDelete";
 
 const TransactionColumnsMethods = () => {
   return {

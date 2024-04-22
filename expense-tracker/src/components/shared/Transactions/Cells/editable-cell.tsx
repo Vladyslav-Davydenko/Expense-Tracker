@@ -4,7 +4,7 @@ import { useUpdateExpenses } from "@/lib/react-query/QueriesAndMuntations";
 
 import { IExpenses } from "@/types";
 
-import { Input } from "../../ui/input";
+import { Input } from "../../../ui/input";
 import { Column, Row } from "@tanstack/react-table";
 
 interface EditableCellProps {
