@@ -92,6 +92,10 @@ export const useCreateExpenses = () => {
     onError: (_err, _newExpenses, context) => {
       queryClient.setQueryData(["expenses"], context?.previousExpenses);
     },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+    },
   });
 };
 

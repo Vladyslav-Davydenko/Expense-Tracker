@@ -31,8 +31,8 @@ export interface IType extends Models.Document {
   owner: string;
 }
 
-export interface INewExpenses extends Models.Document {
-  type: string;
+export interface INewExpenses {
+  type?: string;
   amount: number;
   description?: string;
   isSpent: boolean;
