@@ -57,7 +57,7 @@ const CreateExpense = () => {
     resolver: zodResolver(CreateExpenseValidation),
     defaultValues: {
       type: "",
-      amount: 0,
+      amount: 1,
       description: "",
     },
   });
@@ -77,6 +77,7 @@ const CreateExpense = () => {
       });
     }
 
+    form.reset;
     return toast({
       title: "Created successfully.",
     });
@@ -217,11 +218,24 @@ const CreateExpense = () => {
                         </Button>
                       </div>
                       <FormControl>
-                        <Input
-                          className="text-primary-dark w-[100px]"
-                          type="number"
-                          {...field}
-                        />
+                        <div className=" flex gap-1 relative">
+                          <span
+                            className={`${
+                              spent
+                                ? " text-red-500 left-1"
+                                : "text-green-500 left-[2px]"
+                            } absolute  h-[100%] flex items-center justify-center`}
+                          >
+                            {spent ? "-" : "+"}
+                          </span>
+                          <Input
+                            className={`${
+                              spent ? " text-red-500" : "text-green-500"
+                            } w-[100px]`}
+                            type="number"
+                            {...field}
+                          />
+                        </div>
                       </FormControl>
                     </div>
                     <FormMessage />
