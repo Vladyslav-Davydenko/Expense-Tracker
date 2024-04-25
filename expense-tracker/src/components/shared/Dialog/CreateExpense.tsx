@@ -46,7 +46,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const CreateExpense = () => {
-  const { mutateAsync: createExpense } = useCreateExpenses();
+  const { mutateAsync: createExpense, isPending: isCreating } =
+    useCreateExpenses();
   const { data: types } = useGetTypes();
   const [open, setOpen] = useState(false);
   const [spent, setSpent] = useState(true);
@@ -69,6 +70,8 @@ const CreateExpense = () => {
       isSpent: spent,
     };
 
+    console.log("INside");
+
     const result = await createExpense(newExpenses);
 
     if (!result) {
@@ -77,7 +80,9 @@ const CreateExpense = () => {
       });
     }
 
-    form.reset;
+    form.reset();
+    setValue("");
+    setSpent(true);
     return toast({
       title: "Created successfully.",
     });
@@ -247,8 +252,9 @@ const CreateExpense = () => {
               <Button
                 type="submit"
                 className="bg-primary-light border border-transparent hover:bg-transparent hover:border-white "
+                disabled={isCreating}
               >
-                Create
+                {isCreating ? "Creating..." : "Create"}
               </Button>
               <DialogClose className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground hover:bg-transparent h-10 px-4 py-2 bg-primary-light border border-transparent  hover:border-white ">
                 Close

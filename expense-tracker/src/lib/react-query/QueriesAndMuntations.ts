@@ -73,26 +73,6 @@ export const useCreateExpenses = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newExpense: INewExpenses) => createExpenses(newExpense),
-    onMutate: async (newExpense) => {
-      await queryClient.cancelQueries({ queryKey: ["expenses"] });
-
-      // Snapshot the previous value
-      const previousExpenses = queryClient.getQueryData(["expenses"]);
-
-      // Optimistically update to the new value
-      queryClient.setQueryData(["expenses"], (old: IExpenses[]) => [
-        ...old,
-        newExpense,
-      ]);
-
-      // Return a context object with the snapshotted value
-      return { previousExpenses };
-    },
-
-    onError: (_err, _newExpenses, context) => {
-      queryClient.setQueryData(["expenses"], context?.previousExpenses);
-    },
-    // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
     },

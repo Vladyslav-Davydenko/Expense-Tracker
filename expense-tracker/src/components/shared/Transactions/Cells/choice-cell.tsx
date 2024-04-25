@@ -44,10 +44,7 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
-  useEffect(() => {
+    console.log("choice2");
     if (isMounted.current) handleChange();
     else isMounted.current = true;
   }, [value]);
