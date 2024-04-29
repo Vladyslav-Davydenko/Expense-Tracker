@@ -22,9 +22,14 @@ const EditableCell = ({ getValue, row, column }: EditableCellProps) => {
 
   const handleOnBlur = async () => {
     if (value === initialValue) return;
-    const newExpense = { ...row.original, [column.id]: value };
+    const newExpense = { [column.id]: value };
 
-    const expense = await updateExpense(newExpense);
+    const newUpdate = {
+      id: row.original.$id,
+      data: newExpense,
+    };
+
+    const expense = await updateExpense(newUpdate);
 
     if (!expense) {
       return toast({

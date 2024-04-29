@@ -24,8 +24,10 @@ export const useGetExpenses = () => {
 export const useUpdateExpenses = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (newExpense: INewExpenses | IExpenses) =>
-      updateExpenses(newExpense),
+    mutationFn: (update: {
+      id: string;
+      data: Partial<INewExpenses> | Partial<IExpenses>;
+    }) => updateExpenses(update),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["expenses"] });
 

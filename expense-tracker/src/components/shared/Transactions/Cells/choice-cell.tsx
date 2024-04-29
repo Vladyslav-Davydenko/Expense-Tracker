@@ -44,7 +44,6 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 
   useEffect(() => {
-    console.log("choice2");
     if (isMounted.current) handleChange();
     else isMounted.current = true;
   }, [value]);
@@ -73,8 +72,8 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
 
   const handleChange = async () => {
     const newExpense = {
-      ...row.original,
-      type: types?.find((type) => type.name === value)?.$id || "",
+      id: row.original.$id,
+      data: { type: types?.find((type) => type.name === value)?.$id || "" },
     };
 
     const expense = await updateExpense(newExpense);

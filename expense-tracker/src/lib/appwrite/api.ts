@@ -143,7 +143,13 @@ export async function createExpenses(newExpense: INewExpenses) {
   return createdExpense as IExpenses;
 }
 
-export async function updateExpenses(newExpense: INewExpenses | IExpenses) {
+export async function updateExpenses({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<INewExpenses> | Partial<IExpenses>;
+}) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) throw Error;
@@ -151,15 +157,8 @@ export async function updateExpenses(newExpense: INewExpenses | IExpenses) {
   const expense = await databases.updateDocument(
     appwriteConfig.databaseId,
     appwriteConfig.expenseCollectionId,
-    newExpense.$id,
-    {
-      owner: currentUser.$id,
-      type: newExpense.type,
-      date: newExpense.date,
-      amount: newExpense.amount,
-      description: newExpense.description,
-      isSpent: newExpense.isSpent,
-    }
+    id,
+    data
   );
 
   if (!expense) throw Error;

@@ -39,12 +39,12 @@ export function DateTimePicker({ initialDate, expense }: DateTimePickerProps) {
   const handleDateUpdate = useDebouncedCallback(async () => {
     if (!date || date.getTime() === initialDate.getTime()) return;
 
-    const newExpense = {
-      ...expense,
-      date: date.toISOString(),
+    const update = {
+      id: expense.$id,
+      data: { date: date.toISOString() },
     };
 
-    const res = await updateExpense(newExpense);
+    const res = await updateExpense(update);
 
     if (!res) {
       return toast({
