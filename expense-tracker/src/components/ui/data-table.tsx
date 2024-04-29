@@ -148,6 +148,8 @@ function DataTable<TData, TValue>({
           previousPage={table.previousPage}
           nextPage={table.nextPage}
           setPageIndex={table.setPageIndex}
+          totalOnSinglePage={table.initialState.pagination.pageSize}
+          totalEntries={table.getRowCount()}
         />
       )}
     </>
