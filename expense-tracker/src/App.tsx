@@ -8,7 +8,7 @@ import {
   Dashboard,
   Investments,
   Statistics,
-  Goals,
+  Types,
   Transactions,
   Tests,
 } from "./pages/_root";
@@ -30,7 +30,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/statistics" element={<Statistics />} />
-          <Route path="/goals" element={<Goals />} />
+          <Route path="/types" element={<Types />} />
           <Route path="/investments" element={<Investments />} />
           <Route path="/tests" element={<Tests count={0} />} />
         </Route>

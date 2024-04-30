@@ -20,6 +20,10 @@ export const columns: ColumnDef<IExpenses>[] = [
     accessorKey: "description",
     enableSorting: false,
     header: () => <div className="text-center">Description</div>,
+    cell: ({ row, column }) => {
+      const text = row.getValue(column.id) as string;
+      return text.slice(0, 12) + "...";
+    },
   },
   {
     accessorKey: "date",

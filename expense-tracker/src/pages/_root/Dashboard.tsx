@@ -6,10 +6,15 @@ const Dashboard = () => {
   const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
   return (
     <div>
-      <TransactionsTable
-        expenses={expenses?.slice(0, 4) || []}
-        isLoading={isExpensesLoading}
-      />
+      <h2 className=" text-xl font-semibold tracking-wider uppercase px-8 pt-10">
+        Dashboard
+      </h2>
+      <div>
+        <TransactionsTable
+          expenses={expenses?.slice(0, 4) || []}
+          isLoading={isExpensesLoading}
+        />
+      </div>
     </div>
   );
 };

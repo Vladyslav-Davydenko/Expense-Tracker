@@ -21,7 +21,7 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/icons/goals.svg",
-    route: "/goals",
-    label: "Goals",
+    route: "/types",
+    label: "Types",
   },
 ];
