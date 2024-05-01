@@ -25,7 +25,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TypeChoiceSceleton } from "../../Sceletons";
 
 interface EditableCellProps {
   getValue: () => unknown;
@@ -55,23 +54,18 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
       role="combobox"
       className="w-full max-w-[200px] justify-between hover:bg-primary"
     >
-      {isTypesFetching ? (
-        <TypeChoiceSceleton />
+      {value ? (
+        <div className="flex gap-2 justify-start items-center">
+          <div
+            className="w-[16px] h-[16px]"
+            style={{ backgroundColor: row.original.type.color ?? "white" }}
+          ></div>
+          {row.original.type?.name ?? "Test"}
+        </div>
       ) : (
-        <>
-          {" "}
-          value ? (
-          <div className="flex gap-2 justify-start items-center">
-            <div
-              className="w-[16px] h-[16px]"
-              style={{ backgroundColor: row.original.type.color ?? "white" }}
-            ></div>
-            {row.original.type?.name ?? "Test"}
-          </div>
-          ) : ( "Select Type..." )
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </>
+        "Select Type..."
       )}
+      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
 

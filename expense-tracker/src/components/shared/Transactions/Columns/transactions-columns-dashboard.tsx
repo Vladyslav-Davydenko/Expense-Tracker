@@ -9,11 +9,12 @@ export const columns: ColumnDef<IExpenses>[] = [
     enableSorting: false,
     cell: ({ row }) => {
       const boxColor = row.original.type.color;
-      const boxClasses = clsx({
-        [boxColor]: true,
-        "w-[16px] h-[16px] rounded-sm": true,
-      });
-      return <div className={boxClasses}></div>;
+      return (
+        <div
+          className="w-[16px] h-[16px] rounded-sm"
+          style={{ backgroundColor: boxColor }}
+        ></div>
+      );
     },
   },
   {
