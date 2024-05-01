@@ -96,7 +96,10 @@ export default function TypeFilter({
                         : "opacity-0"
                     )}
                   />
-                  <div className={`${type.color} w-[16px] h-[16px] mr-2`}></div>
+                  <div
+                    className="w-[16px] h-[16px] mr-2"
+                    style={{ backgroundColor: type.color ?? "white" }}
+                  ></div>
                   {type.name}
                 </CommandItem>
               ))}
