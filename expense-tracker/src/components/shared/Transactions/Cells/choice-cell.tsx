@@ -25,6 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { TypeChoiceSceleton } from "../../Sceletons";
 
 interface EditableCellProps {
   getValue: () => unknown;
@@ -54,19 +55,23 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
       role="combobox"
       className="w-full max-w-[200px] justify-between hover:bg-primary"
     >
-      {value ? (
-        <div className="flex gap-2 justify-start items-center">
-          <div
-            className={`${
-              row.original.type?.color ?? "white"
-            } w-[16px] h-[16px]`}
-          ></div>
-          {row.original.type?.name ?? "Test"}
-        </div>
+      {isTypesFetching ? (
+        <TypeChoiceSceleton />
       ) : (
-        "Select Type..."
+        <>
+          {" "}
+          value ? (
+          <div className="flex gap-2 justify-start items-center">
+            <div
+              className="w-[16px] h-[16px]"
+              style={{ backgroundColor: row.original.type.color ?? "white" }}
+            ></div>
+            {row.original.type?.name ?? "Test"}
+          </div>
+          ) : ( "Select Type..." )
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </>
       )}
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   );
 
@@ -105,11 +110,13 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
           {value ? (
             <div className="flex gap-2 justify-start items-center">
               <div
-                className={`${
-                  types.find((type) => type.name === value)?.color
-                } w-[16px] h-[16px] overflow-hidden`}
+                className="w-[16px] h-[16px] overflow-hidden"
+                style={{
+                  backgroundColor:
+                    types.find((type) => type.name === value)?.color ?? "white",
+                }}
               ></div>
-              {`${types.find((type) => type.name === value)?.name}`}
+              {types.find((type) => type.name === value)?.name}
             </div>
           ) : (
             "Select Type..."
@@ -139,7 +146,10 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
                       value === type.name ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  <div className={`${type.color} w-[16px] h-[16px] mr-2`}></div>
+                  <div
+                    className="w-[16px] h-[16px] mr-2"
+                    style={{ backgroundColor: type.color }}
+                  ></div>
                   {type.name}
                 </CommandItem>
               ))}

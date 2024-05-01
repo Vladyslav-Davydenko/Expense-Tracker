@@ -89,3 +89,7 @@ export const ProfileSceleton = () => {
     </div>
   );
 };
+
+export const TypeChoiceSceleton = () => {
+  return <Skeleton className="h-[40px] w-[200px] rounded-md bg-primary" />;
+};
