@@ -21,10 +21,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { INewType } from "@/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  setType: React.Dispatch<React.SetStateAction<INewType & { $id: string }>>;
   isNotDashboard?: boolean;
 }
 
@@ -36,6 +38,7 @@ export interface IColumnFilters {
 function DataTableTypes<TData, TValue>({
   data,
   columns,
+  setType,
   isNotDashboard = false,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<IColumnFilters[]>([]);
@@ -103,6 +106,22 @@ function DataTableTypes<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => {
+                    const id = row.getValue(
+                      row.getVisibleCells()[0].column.id
+                    ) as string;
+                    const name = row.getValue(
+                      row.getVisibleCells()[1].column.id
+                    ) as string;
+                    const color = row.getValue(
+                      row.getVisibleCells()[2].column.id
+                    ) as string;
+                    setType({
+                      $id: id,
+                      name,
+                      color,
+                    });
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
