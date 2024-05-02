@@ -40,6 +40,8 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const [value, setValue] = useState(initialValue);
   const [open, setOpen] = useState(false);
 
+  console.log({ value });
+
   const { data: types, isLoading: isTypesFetching } = useGetTypes();
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 
@@ -54,13 +56,13 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
       role="combobox"
       className="w-full max-w-[200px] justify-between hover:bg-primary"
     >
-      {value ? (
+      {value && row.original.type?.name ? (
         <div className="flex gap-2 justify-start items-center">
           <div
             className="w-[16px] h-[16px]"
-            style={{ backgroundColor: row.original.type.color ?? "white" }}
+            style={{ backgroundColor: row.original.type?.color ?? "white" }}
           ></div>
-          {row.original.type?.name ?? "Test"}
+          {row.original.type?.name ?? ""}
         </div>
       ) : (
         "Select Type..."
