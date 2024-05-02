@@ -8,6 +8,7 @@ import {
   updateExpenses,
   fetchTypes,
   createTypes,
+  updateType,
   deleteExpenses,
 } from "../appwrite/api";
 import { IExpenses, INewExpenses, INewType, INewUser, IType } from "@/types";
@@ -129,7 +130,30 @@ export const useCreateType = () => {
     },
 
     onError: (_err, _newExpenses, context) => {
-      queryClient.setQueryData(["types"], context?.previuosTypes);
+      queryClient.setQueryData(["types"], context?.previuosTypes || []);
+    },
+  });
+};
+
+export const useUpdateType = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (update: { id: string; data: Partial<IType> }) =>
+      updateType(update),
+    onMutate: async (updatedType) => {
+      await queryClient.cancelQueries({ queryKey: ["types"] });
+      const previousTypes = queryClient.getQueryData(["types"]) as IType[];
+      queryClient.setQueryData(["types"], (old: IType[]) => {
+        const withoutUpdated = old.filter(
+          (type) => type.$id !== updatedType.id
+        );
+        return [...withoutUpdated, updatedType.data];
+      });
+
+      return { previousTypes };
+    },
+    onError: (_err, _updatedType, context) => {
+      queryClient.setQueryData(["types"], context?.previousTypes || []);
     },
   });
 };

@@ -223,6 +223,29 @@ export async function createTypes(newType: INewType) {
   return createdType as IType;
 }
 
+export async function updateType({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<IType>;
+}) {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) throw Error;
+
+  const updatedType = await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.typeCollectionId,
+    id,
+    data
+  );
+
+  if (!updatedType) throw Error;
+
+  return updatedType as IType;
+}
+
 export async function deleteType(id: string) {
   const currentUser = await getCurrentUser();
 

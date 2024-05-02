@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { TwitterPicker } from "react-color";
+import { useToast } from "@/components/ui/use-toast";
 
-import { useGetTypes } from "@/lib/react-query/QueriesAndMuntations";
+import {
+  useGetTypes,
+  useCreateType,
+  useUpdateType,
+} from "@/lib/react-query/QueriesAndMuntations";
 
 import TypessTable from "@/components/shared/Types/TypesTable";
 import { Input } from "@/components/ui/input";
@@ -15,14 +20,66 @@ const defaultValueType = {
   color: "#fff",
 };
 
+const defaultColors: string[] = [
+  "#FF5733",
+  "#33FFB9",
+  "#B933FF",
+  "#32B8FF",
+  "#FF3394",
+  "#FFCB22",
+  "#3394FF",
+  "#92CB33",
+  "#33CFB9",
+];
+
 const Types = () => {
   const { data: types, isLoading: isTypesLoading } = useGetTypes();
+  const { mutateAsync: createType } = useCreateType();
+  const { mutateAsync: updateType } = useUpdateType();
+
+  const { toast } = useToast();
+
+  let usedColors = [""];
+  if (types) usedColors = types.map((type) => type.color);
   const [type, setType] = useState<INewType & { $id?: string }>(
     defaultValueType
   );
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     console.log({ type });
+    if (type.$id) {
+      // Update action
+      const updatedType = await updateType({
+        id: type.$id,
+        data: {
+          name: type.name,
+          color: type.color,
+        },
+      });
+      if (!updatedType)
+        return toast({
+          title: "Update failed. Please try again.",
+        });
+
+      return toast({
+        title: "Update successed.",
+      });
+    } else {
+      // Create action
+      const createdType = await createType({
+        name: type.name,
+        color: type.color,
+      });
+
+      if (!createdType)
+        return toast({
+          title: "Creation failed. Please try again.",
+        });
+
+      return toast({
+        title: "Created successfully.",
+      });
+    }
   };
 
   const handleClearData = () => {
@@ -58,6 +115,7 @@ const Types = () => {
           </div>
           <TwitterPicker
             triangle="top-right"
+            colors={[...defaultColors, ...usedColors]}
             color={type?.color ?? "#fff"}
             onChange={(color) => setType({ ...type, color: color.hex })}
           />
