@@ -1,6 +1,7 @@
 import { IType } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import HiddenCell from "../../Transactions/Cells/hidden-cell";
+import TypesColumnsMethods from "./types-columns-methods";
 
 export const columns: ColumnDef<IType>[] = [
   {
@@ -29,4 +30,5 @@ export const columns: ColumnDef<IType>[] = [
       );
     },
   },
+  TypesColumnsMethods(),
 ];

@@ -18,12 +18,7 @@ export default function TypessTable({
   }
   return (
     <div className="w-full">
-      <DataTableTypes
-        columns={columns}
-        data={types}
-        isNotDashboard={true}
-        setType={setType}
-      />
+      <DataTableTypes columns={columns} data={types} setType={setType} />
     </div>
   );
 }

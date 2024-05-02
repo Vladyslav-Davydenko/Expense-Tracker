@@ -27,7 +27,6 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   setType: React.Dispatch<React.SetStateAction<INewType & { $id: string }>>;
-  isNotDashboard?: boolean;
 }
 
 export interface IColumnFilters {
@@ -39,7 +38,6 @@ function DataTableTypes<TData, TValue>({
   data,
   columns,
   setType,
-  isNotDashboard = false,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<IColumnFilters[]>([]);
   const table = useReactTable({
@@ -62,14 +60,12 @@ function DataTableTypes<TData, TValue>({
 
   return (
     <>
-      {isNotDashboard && (
-        <div className="mb-8">
-          <ColumnFilter
-            columnFilters={columnFilters}
-            setColumnFilters={setColumnFilters}
-          />
-        </div>
-      )}
+      <div className="mb-8">
+        <ColumnFilter
+          columnFilters={columnFilters}
+          setColumnFilters={setColumnFilters}
+        />
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -147,17 +143,15 @@ function DataTableTypes<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {isNotDashboard && (
-        <Pagination
-          currentPage={table.getState().pagination.pageIndex + 1}
-          totalPages={table.getPageCount()}
-          previousPage={table.previousPage}
-          nextPage={table.nextPage}
-          setPageIndex={table.setPageIndex}
-          totalOnSinglePage={table.initialState.pagination.pageSize}
-          totalEntries={table.getRowCount()}
-        />
-      )}
+      <Pagination
+        currentPage={table.getState().pagination.pageIndex + 1}
+        totalPages={table.getPageCount()}
+        previousPage={table.previousPage}
+        nextPage={table.nextPage}
+        setPageIndex={table.setPageIndex}
+        totalOnSinglePage={table.initialState.pagination.pageSize}
+        totalEntries={table.getRowCount()}
+      />
     </>
   );
 }

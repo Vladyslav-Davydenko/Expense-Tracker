@@ -10,6 +10,7 @@ import {
   createTypes,
   updateType,
   deleteExpenses,
+  deleteType,
 } from "../appwrite/api";
 import { IExpenses, INewExpenses, INewType, INewUser, IType } from "@/types";
 
@@ -132,6 +133,9 @@ export const useCreateType = () => {
     onError: (_err, _newExpenses, context) => {
       queryClient.setQueryData(["types"], context?.previuosTypes || []);
     },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["types"] });
+    },
   });
 };
 
@@ -157,6 +161,29 @@ export const useUpdateType = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
+    },
+  });
+};
+
+export const useDeleteType = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteType(id),
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["types"] });
+      // Snapshot the previous value
+      const previousTypes = queryClient.getQueryData(["types"]);
+      // Optimistically update to the new value
+      queryClient.setQueryData(["types"], (old: IExpenses[]) => [
+        ...old.filter((e) => e.$id !== id),
+      ]);
+      return { previousTypes };
+    },
+    onError: (_err, _newExpenses, context) => {
+      queryClient.setQueryData(["types"], context?.previousTypes);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["types"] });
     },
   });
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TwitterPicker } from "react-color";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -45,8 +45,11 @@ const Types = () => {
     defaultValueType
   );
 
+  useEffect(() => {
+    setType(defaultValueType);
+  }, [types]);
+
   const handleButtonClick = async () => {
-    console.log({ type });
     if (type.$id) {
       // Update action
       const updatedType = await updateType({
