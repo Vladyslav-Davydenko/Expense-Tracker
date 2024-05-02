@@ -87,7 +87,7 @@ const Types = () => {
   };
   return (
     <div className="container py-10 h-dvh">
-      <h2 className=" text-xl font-semibold tracking-wider uppercase mb-10">
+      <h2 className=" text-xl font-semibold tracking-wider uppercase mb-20">
         Types Table
       </h2>
       <div className="flex justify-center items-center gap-10">

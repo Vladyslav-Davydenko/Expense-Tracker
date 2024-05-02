@@ -155,5 +155,8 @@ export const useUpdateType = () => {
     onError: (_err, _updatedType, context) => {
       queryClient.setQueryData(["types"], context?.previousTypes || []);
     },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+    },
   });
 };

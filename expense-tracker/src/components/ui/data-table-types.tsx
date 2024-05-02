@@ -106,6 +106,7 @@ function DataTableTypes<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="hover:bg-primary-light cursor-pointer"
                   onClick={() => {
                     const id = row.getValue(
                       row.getVisibleCells()[0].column.id
