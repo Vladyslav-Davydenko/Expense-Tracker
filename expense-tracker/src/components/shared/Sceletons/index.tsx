@@ -44,26 +44,29 @@ export const TableSceleton = () => {
         </div>
       </div>
       <Skeleton className="w-[100%] h-[85%] rounded-sm bg-primary" />
-      <div className="flex justify-center items-center mt-4">
-        <div className="pointer-events-none text-gray-300 mr-2 md:mr-4 p-2 rounded-md border-white border">
-          <img
-            src="/assets/icons/arrow-left.svg"
-            alt="previous"
-            className="w-[20px] h-[20px]"
-          />
-        </div>
+      <div className="flex justify-between items-center">
+        <p className=" opacity-70">Showing data 0 to 0 of 0 entries</p>
+        <div className="flex justify-center items-center mt-4">
+          <div className="pointer-events-none text-gray-300 mr-2 md:mr-4 p-2 rounded-md border-white border">
+            <img
+              src="/assets/icons/arrow-left.svg"
+              alt="previous"
+              className="w-[20px] h-[20px]"
+            />
+          </div>
 
-        <div className="flex -space-x-px gap-2">
-          <Skeleton className="h-10 w-10 rounded-md bg-primary " />
-          <Skeleton className="h-10 w-10 rounded-md bg-primary " />
-          <Skeleton className="h-10 w-10 rounded-md bg-primary " />
-        </div>
-        <div className="pointer-events-none text-gray-300 ml-2 md:ml-4 p-2 rounded-md border-white border">
-          <img
-            src="/assets/icons/arrow-right.svg"
-            alt="next"
-            className="w-[20px] h-[20px]"
-          />
+          <div className="flex -space-x-px gap-2">
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+          </div>
+          <div className="pointer-events-none text-gray-300 ml-2 md:ml-4 p-2 rounded-md border-white border">
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="next"
+              className="w-[20px] h-[20px]"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -92,4 +95,51 @@ export const ProfileSceleton = () => {
 
 export const TypeChoiceSceleton = () => {
   return <Skeleton className="h-[40px] w-[200px] rounded-md bg-primary" />;
+};
+
+export const TypeTableSceleton = () => {
+  return (
+    <div className="w-full">
+      <div className="flex flex-col mb-8">
+        <div className="flex-1">
+          <div className="mb-8 relative flex justify-center items-center">
+            <img
+              src="/assets/icons/search.svg"
+              alt="search"
+              className="w-[20px] h-[20px] absolute left-2"
+            />
+            <Input
+              className="bg-primary border-0 pl-8"
+              placeholder="Search Transactions"
+            />
+          </div>
+        </div>
+        <Skeleton className="w-[100%] h-[275px] rounded-sm bg-primary" />
+      </div>
+      <div className="flex justify-between items-center mt-8">
+        <p className=" opacity-70">Showing data 0 to 0 of 0 entries</p>
+        <div className="flex justify-center items-center">
+          <div className="pointer-events-none text-gray-300 mr-2 md:mr-4 p-2 rounded-md border-white border">
+            <img
+              src="/assets/icons/arrow-left.svg"
+              alt="previous"
+              className="w-[20px] h-[20px]"
+            />
+          </div>
+          <div className="flex -space-x-px gap-2">
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+            <Skeleton className="h-10 w-10 rounded-md bg-primary " />
+          </div>
+          <div className="pointer-events-none text-gray-300 ml-2 md:ml-4 p-2 rounded-md border-white border">
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="next"
+              className="w-[20px] h-[20px]"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };

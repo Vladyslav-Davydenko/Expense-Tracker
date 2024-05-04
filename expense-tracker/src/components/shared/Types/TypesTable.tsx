@@ -1,6 +1,7 @@
 import { INewType, IType } from "@/types";
 import { columns } from "./columns/types-columns";
 import DataTableTypes from "@/components/ui/data-table-types";
+import { TypeTableSceleton } from "../Sceletons";
 
 interface TypesTableProps {
   types: IType[];
@@ -14,7 +15,7 @@ export default function TypessTable({
   setType,
 }: TypesTableProps) {
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <TypeTableSceleton />;
   }
   return (
     <div className="w-full">
