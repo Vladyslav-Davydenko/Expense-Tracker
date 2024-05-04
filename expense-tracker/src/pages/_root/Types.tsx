@@ -45,6 +45,10 @@ const Types = () => {
     defaultValueType
   );
 
+  const colorsForPicker = Array.from(
+    new Set([...defaultColors, ...usedColors])
+  );
+
   useEffect(() => {
     setType(defaultValueType);
   }, [types]);
@@ -118,7 +122,7 @@ const Types = () => {
           </div>
           <TwitterPicker
             triangle="top-right"
-            colors={[...defaultColors, ...usedColors]}
+            colors={colorsForPicker}
             color={type?.color ?? "#fff"}
             onChange={(color) => setType({ ...type, color: color.hex })}
           />

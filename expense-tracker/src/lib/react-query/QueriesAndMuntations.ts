@@ -148,10 +148,22 @@ export const useUpdateType = () => {
       await queryClient.cancelQueries({ queryKey: ["types"] });
       const previousTypes = queryClient.getQueryData(["types"]) as IType[];
       queryClient.setQueryData(["types"], (old: IType[]) => {
-        const withoutUpdated = old.filter(
-          (type) => type.$id !== updatedType.id
+        const updatedIndex = old.findIndex(
+          (type) => type.$id === updatedType.id
         );
-        return [...withoutUpdated, updatedType.data];
+        if (updatedIndex === -1) {
+          // If the updated type is not found, simply return the old array with the updated type appended
+          return [...old, updatedType.data];
+        } else {
+          // If the updated type is found, create a new array with the updated type at the correct position
+          return old.map((type, index) => {
+            if (index === updatedIndex) {
+              return updatedType.data;
+            } else {
+              return type;
+            }
+          });
+        }
       });
 
       return { previousTypes };
@@ -160,7 +172,7 @@ export const useUpdateType = () => {
       queryClient.setQueryData(["types"], context?.previousTypes || []);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      queryClient.invalidateQueries({ queryKey: ["expenses", "types"] });
     },
   });
 };
