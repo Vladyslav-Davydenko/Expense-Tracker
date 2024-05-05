@@ -1,5 +1,5 @@
 import { IExpenses } from "@/types";
-import { columns } from "./Columns/transaction-columns";
+import { columns } from "./columns/transaction-columns";
 import DataTable from "@/components/ui/data-table";
 import { TableSceleton } from "../Sceletons";
 

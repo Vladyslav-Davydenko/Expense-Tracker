@@ -21,15 +21,16 @@ const defaultValueType = {
 };
 
 const defaultColors: string[] = [
-  "#FF5733",
-  "#33FFB9",
-  "#B933FF",
-  "#32B8FF",
-  "#FF3394",
-  "#FFCB22",
-  "#3394FF",
-  "#92CB33",
-  "#33CFB9",
+  "#FF6900",
+  "#FCB900",
+  "#7BDCB5",
+  "#00D084",
+  "#8ED1FC",
+  "#0693E3",
+  "#ABB8C3",
+  "#EB144C",
+  "#F78DA7",
+  "#9900EF",
 ];
 
 const Types = () => {
@@ -40,7 +41,7 @@ const Types = () => {
   const { toast } = useToast();
 
   let usedColors = [""];
-  if (types) usedColors = types.map((type) => type.color);
+  if (types) usedColors = types.map((type) => type.color.toUpperCase());
   const [type, setType] = useState<INewType & { $id?: string }>(
     defaultValueType
   );

@@ -10,9 +10,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import ColumnFilter from "../shared/Transactions/Filters/column-filter";
-import CreateExpense from "../shared/Dialog/CreateExpense";
-import TypeFilter from "../shared/Transactions/Filters/type-filter";
+import ColumnFilter from "../shared/Transactions/filters/column-filter";
+import CreateExpense from "../shared/Transactions/dialog/CreateExpense";
+import TypeFilter from "../shared/Transactions/filters/type-filter";
 import Pagination from "../shared/Pagination/Pagination";
 
 import {

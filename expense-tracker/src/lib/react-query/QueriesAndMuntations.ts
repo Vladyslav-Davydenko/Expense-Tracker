@@ -172,7 +172,7 @@ export const useUpdateType = () => {
       queryClient.setQueryData(["types"], context?.previousTypes || []);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["expenses", "types"] });
+      queryClient.invalidateQueries({ queryKey: ["types"] });
     },
   });
 };
