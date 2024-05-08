@@ -17,7 +17,7 @@ export default function TransactionsTableDashboard({
     return <TableDashBoardSceleton />;
   }
   return (
-    <div className="container mx-auto py-10">
+    <div className="mx-auto">
       <DataTable columns={columns} data={expenses} />
     </div>
   );
