@@ -33,9 +33,11 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
 
   expenses.map((expense) => {
     if (!expensesSums[expense.type.name])
-      expensesSums[expense.type.name] = expense.amount / 100;
-    else expensesSums[expense.type.name] += expense.amount / 100;
+      expensesSums[expense.type.name] = expense.amount;
+    else expensesSums[expense.type.name] += expense.amount;
   });
+
+  console.log(expensesSums);
 
   const options = {
     responsive: true,
@@ -46,6 +48,20 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
           color: "white",
         },
       },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            let label = context.label || "";
+            if (label) {
+              label += ": ";
+            }
+            if (context.raw !== null) {
+              label += "$" + context.raw / 100;
+            }
+            return label;
+          },
+        },
+      },
     },
   };
   const data = {
@@ -54,7 +70,10 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
       {
         label: "Expenses",
         data: Object.values(expensesSums),
-        backgroundColor: types.map((type) => type.color),
+        backgroundColor: Object.keys(expensesSums).map((key) => {
+          const exists = types.find((type) => type.name === key);
+          return exists?.color ?? "gray";
+        }),
         hoverOffset: 4,
       },
     ],
