@@ -7,6 +7,7 @@ import TransactionsTable from "@/components/shared/Transactions/TransactionsTabl
 import DoughnutChart from "@/components/shared/Charts/DoughnutChart";
 import LineChart from "@/components/shared/Charts/LineChart";
 import Topbar from "@/components/shared/Topbar";
+import DashBoardTopBar from "@/components/shared/DashBoard/DashBoardTopBar";
 
 const Dashboard = () => {
   const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
@@ -18,6 +19,7 @@ const Dashboard = () => {
       <h2 className="text-xl font-semibold tracking-wider uppercase px-8 pt-10">
         Dashboard
       </h2>
+      <DashBoardTopBar expenses={expenses ?? []} />
       <div className="flex flex-wrap gap-4">
         <div className="w-[700px] h-[400px] p-4 border border-white rounded-md">
           <LineChart expenses={expenses ?? []} />

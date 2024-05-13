@@ -37,8 +37,6 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
     else expensesSums[expense.type.name] += expense.amount;
   });
 
-  console.log(expensesSums);
-
   const options = {
     responsive: true,
     plugins: {
