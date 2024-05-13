@@ -9,21 +9,26 @@ export const columns: ColumnDef<IExpenses>[] = [
     enableSorting: false,
     cell: ({ row }) => {
       const boxColor = row.original.type.color;
+      const typeName = row.original.type.name;
       return (
-        <div
-          className="w-[16px] h-[16px] rounded-sm"
-          style={{ backgroundColor: boxColor }}
-        ></div>
+        <div className="flex gap-2 overflow-hidden max-w-[200px]">
+          <div
+            className="w-[16px] h-[16px] rounded-sm"
+            style={{ backgroundColor: boxColor }}
+          ></div>
+          <p>({typeName})</p>
+        </div>
       );
     },
   },
   {
     accessorKey: "description",
     enableSorting: false,
+    minSize: 200,
     header: () => <div className="text-center">Description</div>,
     cell: ({ row, column }) => {
       const text = row.getValue(column.id) as string;
-      return text.slice(0, 12) + "...";
+      return <div className="max-w-[200px] overflow-ellipsis">{text}</div>;
     },
   },
   {

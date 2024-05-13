@@ -5,6 +5,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const TableSceleton = () => {
   return (
     <div className="container mx-auto py-10">
+      <h2 className=" text-xl font-semibold tracking-wider uppercase mb-10">
+        Transaction Table
+      </h2>
       <div className="grid grid-cols-6 gap-4 mb-8">
         <div className="flex-1 col-span-2">
           <div className="mb-4 relative flex justify-center items-center">
@@ -37,9 +40,9 @@ export const TableSceleton = () => {
         <div className="flex justify-end gap-4">
           <Button
             variant="ghost"
-            className="bg-primary hover:bg-primary-light text-md"
+            className="bg-primary hover:bg-primary-light text-sm"
           >
-            Create new expense
+            New expense
           </Button>
         </div>
       </div>

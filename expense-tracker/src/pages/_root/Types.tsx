@@ -20,7 +20,7 @@ const defaultValueType = {
   color: "#fff",
 };
 
-export const defaultColors: string[] = [
+const defaultColors: string[] = [
   "#FF6900",
   "#FCB900",
   "#7BDCB5",

@@ -34,7 +34,7 @@ module.exports = {
         xs: "480px",
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
       keyframes: {},
       animation: {},

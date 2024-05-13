@@ -89,8 +89,8 @@ const CreateExpense = () => {
   };
   return (
     <Dialog>
-      <DialogTrigger className="bg-primary hover:bg-primary-light text-white py-2 px-4 rounded-md">
-        Create new expense
+      <DialogTrigger className="bg-primary hover:bg-primary-light text-white py-2 px-4 rounded-md text-sm">
+        New expense
       </DialogTrigger>
       <DialogContent className="bg-primary border-0">
         <DialogHeader>

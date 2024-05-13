@@ -1,49 +1,48 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
-import { Button } from "../ui/button";
 import { useUserContext } from "@/context/AuthContext";
-import { useSignOutAccount } from "@/lib/react-query/QueriesAndMuntations";
+import { Input } from "../ui/input";
+import { useState } from "react";
+
+import { ProfileSceleton } from "./Sceletons";
 
 const Topbar = () => {
-  const navigate = useNavigate();
-  const { user } = useUserContext();
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
-
-  useEffect(() => {
-    if (isSuccess) navigate(0);
-  }, [isSuccess, navigate]);
-
+  const { user, isLoading } = useUserContext();
+  const [search, setSearch] = useState<string>("");
   return (
-    <section className="topbar">
-      <div className="flex-between py-4 px-5">
-        <Link to="/" className="flex gap-3 items-center">
+    <div className="flex justify-between items-center absolute top-2 right-2 left-2 px-8 py-2 bg-primary rounded-md">
+      <h2>Welcome Back, {user.name}</h2>
+      <div className="flex justify-center items-center gap-2">
+        <div className="relative flex justify-center items-center">
           <img
-            src="/assets/images/logo.svg"
-            alt="logo"
-            width={130}
-            height={325}
+            src="/assets/icons/search.svg"
+            alt="search"
+            className="w-[20px] h-[20px] absolute left-2"
           />
-        </Link>
-
-        <div className="flex gap-4">
-          <Button
-            variant="ghost"
-            className="shad-button_ghost"
-            onClick={() => signOut()}
-          >
-            <img src="/assets/icons/logout.svg" alt="logout" />
-          </Button>
-          <Link to={`/profile/${user.id}`} className="flex-center gap-3">
-            <img
-              src="/assets/icons/profile-placeholder.svg"
-              alt="profile"
-              className="h-8 w-8 rounded-full"
-            />
-          </Link>
+          <Input
+            className="bg-primary-dark border-0 pl-8"
+            placeholder="Search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
+        {isLoading || !user.email ? (
+          <div className="h-14">
+            <ProfileSceleton />
+          </div>
+        ) : (
+          <div className="flex gap-2 justify-center items-center">
+            <img
+              src={"/assets/icons/profile-placeholder.svg"}
+              alt="profile"
+              className="h-[36px] w-[36px] rounded-full"
+            />
+            <div className="flex flex-col">
+              <p className="body-bold">{user.name}</p>
+              <p className="small-regular text-light-3">@{user.username}</p>
+            </div>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 

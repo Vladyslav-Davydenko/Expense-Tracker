@@ -1,19 +1,16 @@
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
   Legend,
   ArcElement,
-  BarElement,
+  LineElement,
 } from "chart.js";
 import { IExpenses } from "@/types";
-
-import { defaultColors } from "@/pages/_root/Types";
 
 const months = [
   "January",
@@ -30,11 +27,11 @@ const months = [
   "December",
 ];
 
-interface BarChartProps {
+interface LineChartProps {
   expenses: IExpenses[];
 }
 
-const BarChart = ({ expenses }: BarChartProps) => {
+const LineChart = ({ expenses }: LineChartProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -44,7 +41,7 @@ const BarChart = ({ expenses }: BarChartProps) => {
     Tooltip,
     Legend,
     ArcElement,
-    BarElement
+    LineElement
   );
 
   // Data for different months
@@ -64,7 +61,6 @@ const BarChart = ({ expenses }: BarChartProps) => {
     else preparedData[months[expenseMonth]] += expense.amount;
   });
 
-  console.log(preparedData);
   const options = {
     responsive: true,
     plugins: {
@@ -118,13 +114,13 @@ const BarChart = ({ expenses }: BarChartProps) => {
         data: Object.keys(preparedData)
           .sort((a, b) => months.indexOf(a) - months.indexOf(b))
           .map((key) => preparedData[key] / 100),
-        backgroundColor: defaultColors,
+        backgroundColor: "white",
         borderColor: "white",
         borderWidth: 2,
       },
     ],
   };
-  return <Bar data={data} options={options} />;
+  return <Line data={data} options={options} />;
 };
 
-export default BarChart;
+export default LineChart;

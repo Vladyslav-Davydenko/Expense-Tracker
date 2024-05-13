@@ -5,7 +5,8 @@ import {
 
 import TransactionsTable from "@/components/shared/Transactions/TransactionsTableDashboard";
 import DoughnutChart from "@/components/shared/Charts/DoughnutChart";
-import BarChart from "@/components/shared/Charts/BarChart";
+import LineChart from "@/components/shared/Charts/LineChart";
+import Topbar from "@/components/shared/Topbar";
 
 const Dashboard = () => {
   const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
@@ -13,12 +14,13 @@ const Dashboard = () => {
 
   return (
     <div className="container flex flex-col gap-10">
+      <Topbar />
       <h2 className="text-xl font-semibold tracking-wider uppercase px-8 pt-10">
         Dashboard
       </h2>
       <div className="flex flex-wrap gap-4">
         <div className="w-[700px] h-[400px] p-4 border border-white rounded-md">
-          <BarChart expenses={expenses ?? []} />
+          <LineChart expenses={expenses ?? []} />
         </div>
         <div className="w-[400px] h-[400px] p-4 border border-white rounded-md">
           <DoughnutChart expenses={expenses ?? []} types={types ?? []} />
