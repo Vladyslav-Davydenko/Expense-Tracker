@@ -77,11 +77,7 @@ export const TableSceleton = () => {
 };
 
 export const TableDashBoardSceleton = () => {
-  return (
-    <div className="container mx-auto py-10 px-8">
-      <Skeleton className="w-[460px] h-[260px] rounded-sm bg-primary" />
-    </div>
-  );
+  return <Skeleton className="w-[600px] h-[250px] rounded-sm bg-primary" />;
 };
 
 export const ProfileSceleton = () => {

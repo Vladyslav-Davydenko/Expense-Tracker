@@ -24,7 +24,7 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
 
   return (
     <div className="flex justify-between items-center">
-      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2">
+      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2 shadow-md">
         <div className="p-3 border border-white rounded-md inline-flex">
           <Wallet />
         </div>
@@ -33,7 +33,7 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
           <p>{`$${availableCount / 100}`}</p>
         </div>
       </div>
-      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2">
+      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2 shadow-md">
         <div className="p-3 border border-white rounded-md inline-flex">
           <HandCoins />
         </div>
@@ -42,7 +42,7 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
           <p>{`$${incomeCount / 100}`}</p>
         </div>
       </div>
-      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2">
+      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2 shadow-md">
         <div className="p-3 border border-white rounded-md inline-flex">
           <CreditCard />
         </div>

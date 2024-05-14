@@ -81,7 +81,7 @@ function DataTable<TData, TValue>({
           </div>
         </div>
       )}
-      <div className="rounded-md border">
+      <div className="rounded-md bg-primary shadow-md drop-shadow-md">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
