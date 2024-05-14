@@ -9,10 +9,11 @@ import LineChart from "@/components/shared/Charts/LineChart";
 import Topbar from "@/components/shared/Topbar";
 import DashBoardTopBar from "@/components/shared/DashBoard/DashBoardTopBar";
 import { TableDashBoardSceleton } from "@/components/shared/Sceletons";
+import MonthComparison from "@/components/shared/DashBoard/MonthComparison";
 
 const Dashboard = () => {
   const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
-  const { data: types } = useGetTypes();
+  const { data: types, isLoading: isTypesLoading } = useGetTypes();
 
   return (
     <div className="container flex flex-col gap-10 mb-10">
@@ -36,6 +37,13 @@ const Dashboard = () => {
               expenses={expenses?.slice(0, 4) || []}
               isLoading={isExpensesLoading}
             />
+          </div>
+        )}
+        {isTypesLoading ? (
+          <TableDashBoardSceleton />
+        ) : (
+          <div className="flex-1">
+            <MonthComparison expenses={expenses || []} types={types ?? []} />
           </div>
         )}
       </div>

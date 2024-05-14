@@ -1,4 +1,5 @@
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,16 +10,18 @@ import {
   Legend,
   ArcElement,
   LineElement,
+  BarElement,
 } from "chart.js";
-import { IExpenses } from "@/types";
+import { IExpenses, IType } from "@/types";
 
 import { months } from "@/constants";
 
-interface LineChartProps {
+interface BarChartProps {
   expenses: IExpenses[];
+  type: IType;
 }
 
-const LineChart = ({ expenses }: LineChartProps) => {
+const BarChart = ({ expenses, type }: BarChartProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -28,7 +31,12 @@ const LineChart = ({ expenses }: LineChartProps) => {
     Tooltip,
     Legend,
     ArcElement,
-    LineElement
+    LineElement,
+    BarElement
+  );
+
+  const filteredExpenses = expenses.filter(
+    (expense) => expense.type.$id === type.$id
   );
 
   // TODO: Make function and Move to utils
@@ -38,7 +46,7 @@ const LineChart = ({ expenses }: LineChartProps) => {
 
   const currentYear = new Date().getFullYear();
 
-  expenses.map((expense) => {
+  filteredExpenses.map((expense) => {
     const expenseDate = new Date(expense.date);
 
     // Data will shown of this year only
@@ -52,6 +60,7 @@ const LineChart = ({ expenses }: LineChartProps) => {
 
   const options = {
     responsive: true,
+    indexAxis: "y" as const,
     plugins: {
       legend: {
         position: "top" as const,
@@ -64,8 +73,8 @@ const LineChart = ({ expenses }: LineChartProps) => {
         callbacks: {
           label: function (context: any) {
             let label = "";
-            if (context.parsed.y !== null) {
-              label += " $" + context.parsed.y;
+            if (context.formattedValue !== null) {
+              label += " $" + context.formattedValue;
             }
             return label;
           },
@@ -74,7 +83,11 @@ const LineChart = ({ expenses }: LineChartProps) => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        ticks: {
+          color: "white",
+        },
+      },
+      x: {
         ticks: {
           color: "white",
           callback: function (
@@ -86,11 +99,6 @@ const LineChart = ({ expenses }: LineChartProps) => {
           },
         },
       },
-      x: {
-        ticks: {
-          color: "white",
-        },
-      },
     },
   };
   const data = {
@@ -99,17 +107,19 @@ const LineChart = ({ expenses }: LineChartProps) => {
     ),
     datasets: [
       {
-        label: `Expenses for ${currentYear}`,
+        axis: "y",
+        label: `Expenses for ${type.name} in ${currentYear}`,
         data: Object.keys(preparedData)
           .sort((a, b) => months.indexOf(a) - months.indexOf(b))
           .map((key) => preparedData[key] / 100),
-        backgroundColor: "white",
+        backgroundColor: type.color,
         borderColor: "white",
         borderWidth: 2,
       },
     ],
   };
-  return <Line data={data} options={options} />;
+
+  return <Bar options={options} data={data} />;
 };
 
-export default LineChart;
+export default BarChart;
