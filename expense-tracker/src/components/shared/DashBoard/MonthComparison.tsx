@@ -11,9 +11,11 @@ interface MonthComparisonProps {
 const MonthComparison = ({ types, expenses }: MonthComparisonProps) => {
   const [type, setType] = useState<IType>(types[0]);
   return (
-    <div className="p-4 rounded-md bg-primary shadow-md">
-      <p>Monthly Comparison by Types</p>
-      <div className="flex gap-2 mt-10">
+    <div className="rounded-md bg-primary">
+      <p className="p-4 rounded-md bg-primary shadow-md">
+        Monthly Comparison by Types
+      </p>
+      <div className="flex gap-2 p-4">
         <div className="border-r-2 pr-2 max-h-[400px] overflow-scroll">
           <p>Type List</p>
           <ul className="flex flex-col justify-center items-start mt-4 ">

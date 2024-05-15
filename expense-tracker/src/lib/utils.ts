@@ -1,5 +1,8 @@
+import { IExpenses } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+import { months } from "@/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,4 +39,23 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     "...",
     totalPages,
   ];
+};
+
+// Filter Expenses based on month
+export const filterExpenses = (expenses: IExpenses[], year: number) => {
+  const preparedData: Record<string, number> = {};
+
+  expenses.map((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    // Data will shown of this year only
+    if (expenseDate.getFullYear() !== year) return;
+
+    const expenseMonth = expenseDate.getMonth();
+    if (!preparedData[months[expenseMonth]])
+      preparedData[months[expenseMonth]] = expense.amount;
+    else preparedData[months[expenseMonth]] += expense.amount;
+  });
+
+  return preparedData;
 };

@@ -15,6 +15,7 @@ import {
 import { IExpenses, IType } from "@/types";
 
 import { months } from "@/constants";
+import { filterExpenses } from "@/lib/utils";
 
 interface BarChartProps {
   expenses: IExpenses[];
@@ -36,27 +37,11 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
   );
 
   const filteredExpenses = expenses.filter(
-    (expense) => expense.type.$id === type.$id
+    (expense) => expense?.type && expense.type.$id === type.$id
   );
 
-  // TODO: Make function and Move to utils
-
-  // Data for different months
-  const preparedData: Record<string, number> = {};
-
   const currentYear = new Date().getFullYear();
-
-  filteredExpenses.map((expense) => {
-    const expenseDate = new Date(expense.date);
-
-    // Data will shown of this year only
-    if (expenseDate.getFullYear() !== currentYear) return;
-
-    const expenseMonth = expenseDate.getMonth();
-    if (!preparedData[months[expenseMonth]])
-      preparedData[months[expenseMonth]] = expense.amount;
-    else preparedData[months[expenseMonth]] += expense.amount;
-  });
+  const preparedData = filterExpenses(filteredExpenses, currentYear);
 
   const options = {
     responsive: true,

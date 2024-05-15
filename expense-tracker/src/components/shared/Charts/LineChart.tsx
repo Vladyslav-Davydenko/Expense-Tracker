@@ -14,6 +14,8 @@ import { IExpenses } from "@/types";
 
 import { months } from "@/constants";
 
+import { filterExpenses } from "@/lib/utils";
+
 interface LineChartProps {
   expenses: IExpenses[];
 }
@@ -31,24 +33,8 @@ const LineChart = ({ expenses }: LineChartProps) => {
     LineElement
   );
 
-  // TODO: Make function and Move to utils
-
-  // Data for different months
-  const preparedData: Record<string, number> = {};
-
   const currentYear = new Date().getFullYear();
-
-  expenses.map((expense) => {
-    const expenseDate = new Date(expense.date);
-
-    // Data will shown of this year only
-    if (expenseDate.getFullYear() !== currentYear) return;
-
-    const expenseMonth = expenseDate.getMonth();
-    if (!preparedData[months[expenseMonth]])
-      preparedData[months[expenseMonth]] = expense.amount;
-    else preparedData[months[expenseMonth]] += expense.amount;
-  });
+  const preparedData = filterExpenses(expenses, currentYear);
 
   const options = {
     responsive: true,
@@ -109,7 +95,7 @@ const LineChart = ({ expenses }: LineChartProps) => {
       },
     ],
   };
-  return <Line data={data} options={options} />;
+  return <Line data={data} options={options} className=" p-4 " />;
 };
 
 export default LineChart;

@@ -77,7 +77,23 @@ export const TableSceleton = () => {
 };
 
 export const TableDashBoardSceleton = () => {
-  return <Skeleton className="w-[600px] h-[250px] rounded-sm bg-primary" />;
+  return (
+    <div>
+      <p className="p-4 rounded-md bg-primary shadow-md">Transactions</p>
+      <Skeleton className="w-[580px] h-[260px] rounded-sm bg-primary" />
+    </div>
+  );
+};
+
+export const MonthlyComparisonSceleton = () => {
+  return (
+    <div>
+      <p className="p-4 rounded-md bg-primary shadow-md">
+        Monthly Comparison by Types
+      </p>
+      <Skeleton className="w-[560px] h-[260px] rounded-sm bg-primary" />
+    </div>
+  );
 };
 
 export const ProfileSceleton = () => {

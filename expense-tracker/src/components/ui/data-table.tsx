@@ -82,6 +82,7 @@ function DataTable<TData, TValue>({
         </div>
       )}
       <div className="rounded-md bg-primary shadow-md drop-shadow-md">
+        <p className="p-4 rounded-md bg-primary shadow-md">Transactions</p>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

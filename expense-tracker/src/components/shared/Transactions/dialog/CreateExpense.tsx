@@ -137,10 +137,12 @@ const CreateExpense = () => {
                             {value ? (
                               <div className="flex gap-2 justify-center items-center">
                                 <div
-                                  className={`${
-                                    types?.find((type) => type.$id === value)
-                                      ?.color ?? "gray"
-                                  } w-[16px] h-[16px]`}
+                                  className={`w-[16px] h-[16px]`}
+                                  style={{
+                                    backgroundColor:
+                                      types?.find((type) => type.$id === value)
+                                        ?.color ?? "white",
+                                  }}
                                 ></div>
                                 {types?.find((type) => type.$id === value)
                                   ?.name ?? ""}
@@ -176,7 +178,8 @@ const CreateExpense = () => {
                                       )}
                                     />
                                     <div
-                                      className={`${type.color} w-[16px] h-[16px] mr-2`}
+                                      className={`w-[16px] h-[16px] mr-2`}
+                                      style={{ backgroundColor: type.color }}
                                     ></div>
                                     {type.name}
                                   </CommandItem>

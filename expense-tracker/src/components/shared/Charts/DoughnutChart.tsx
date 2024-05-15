@@ -32,6 +32,7 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
   const expensesSums: Record<string, number> = {};
 
   expenses.map((expense) => {
+    if (!expense?.type?.name) return;
     if (!expensesSums[expense.type.name])
       expensesSums[expense.type.name] = expense.amount;
     else expensesSums[expense.type.name] += expense.amount;
@@ -77,7 +78,7 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
     ],
   };
 
-  return <Doughnut options={options} data={data} />;
+  return <Doughnut options={options} data={data} className="p-4" />;
 };
 
 export default DoughnutChart;

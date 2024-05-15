@@ -10,13 +10,19 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
   let availableCount = 0;
   let expenseCount = 0;
 
+  const currentMonth = new Date().getMonth();
+
   if (expenses && expenses.length) {
     expenseCount = expenses.reduce((total, expense) => {
-      if (expense.isSpent) return total + expense.amount;
+      const expenseDate = new Date(expense.date);
+      if (expense.isSpent && currentMonth === expenseDate.getMonth())
+        return total + expense.amount;
       return total;
     }, 0);
     incomeCount = expenses.reduce((total, expense) => {
-      if (!expense.isSpent) return total + expense.amount;
+      const expenseDate = new Date(expense.date);
+      if (!expense.isSpent && currentMonth === expenseDate.getMonth())
+        return total + expense.amount;
       return total;
     }, 0);
     availableCount = incomeCount - expenseCount;
@@ -30,7 +36,11 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
         </div>
         <div className="flex flex-col">
           <p className="text-sm opacity-70">Available Balance</p>
-          <p>{`$${availableCount / 100}`}</p>
+          <p>{`${
+            availableCount > 0
+              ? "$" + availableCount / 100
+              : "-$" + availableCount / -100
+          }`}</p>
         </div>
       </div>
       <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2 shadow-md">

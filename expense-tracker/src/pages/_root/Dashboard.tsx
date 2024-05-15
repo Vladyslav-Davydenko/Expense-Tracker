@@ -8,7 +8,10 @@ import DoughnutChart from "@/components/shared/Charts/DoughnutChart";
 import LineChart from "@/components/shared/Charts/LineChart";
 import Topbar from "@/components/shared/Topbar";
 import DashBoardTopBar from "@/components/shared/DashBoard/DashBoardTopBar";
-import { TableDashBoardSceleton } from "@/components/shared/Sceletons";
+import {
+  TableDashBoardSceleton,
+  MonthlyComparisonSceleton,
+} from "@/components/shared/Sceletons";
 import MonthComparison from "@/components/shared/DashBoard/MonthComparison";
 
 const Dashboard = () => {
@@ -23,10 +26,16 @@ const Dashboard = () => {
       </h2>
       <DashBoardTopBar expenses={expenses ?? []} />
       <div className="flex flex-wrap gap-4">
-        <div className=" p-4 rounded-md bg-primary shadow-md flex-1">
+        <div className="rounded-md bg-primary shadow-md flex-1">
+          <p className="p-4 rounded-md bg-primary shadow-md">
+            All Expenses each year comparison
+          </p>
           <LineChart expenses={expenses ?? []} />
         </div>
-        <div className="w-[400px] h-[400px] p-4 rounded-md bg-primary shadow-md">
+        <div className="w-[400px] rounded-md bg-primary shadow-md">
+          <p className="p-4 rounded-md bg-primary shadow-md">
+            Comparison by type expenses
+          </p>
           <DoughnutChart expenses={expenses ?? []} types={types ?? []} />
         </div>
         {isExpensesLoading ? (
@@ -40,7 +49,7 @@ const Dashboard = () => {
           </div>
         )}
         {isTypesLoading ? (
-          <TableDashBoardSceleton />
+          <MonthlyComparisonSceleton />
         ) : (
           <div className="flex-1">
             <MonthComparison expenses={expenses || []} types={types ?? []} />
