@@ -34,7 +34,8 @@ const LineChart = ({ expenses }: LineChartProps) => {
   );
 
   const currentYear = new Date().getFullYear();
-  const preparedData = filterExpenses(expenses, currentYear);
+  const preparedData = filterExpenses(expenses, currentYear, true);
+  const incomeData = filterExpenses(expenses, currentYear, false);
 
   const options = {
     responsive: true,
@@ -43,7 +44,6 @@ const LineChart = ({ expenses }: LineChartProps) => {
         position: "top" as const,
         labels: {
           color: "white",
-          boxWidth: 0,
         },
       },
       tooltip: {
@@ -80,17 +80,25 @@ const LineChart = ({ expenses }: LineChartProps) => {
     },
   };
   const data = {
-    labels: Object.keys(preparedData).sort(
-      (a, b) => months.indexOf(a) - months.indexOf(b)
-    ),
+    labels: Object.keys(preparedData),
     datasets: [
       {
         label: `Expenses for ${currentYear}`,
         data: Object.keys(preparedData)
           .sort((a, b) => months.indexOf(a) - months.indexOf(b))
           .map((key) => preparedData[key] / 100),
-        backgroundColor: "white",
-        borderColor: "white",
+        backgroundColor: "red",
+        borderColor: "red",
+        borderWidth: 2,
+      },
+
+      {
+        label: `Incomes for ${currentYear}`,
+        data: Object.keys(incomeData)
+          .sort((a, b) => months.indexOf(a) - months.indexOf(b))
+          .map((key) => incomeData[key] / 100),
+        backgroundColor: "green",
+        borderColor: "green",
         borderWidth: 2,
       },
     ],

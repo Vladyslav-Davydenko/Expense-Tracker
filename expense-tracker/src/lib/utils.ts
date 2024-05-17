@@ -41,21 +41,57 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
+type MonthValues = Record<string, number>;
+
 // Filter Expenses based on month
-export const filterExpenses = (expenses: IExpenses[], year: number) => {
-  const preparedData: Record<string, number> = {};
+export const filterExpenses = (
+  expenses: IExpenses[],
+  year: number,
+  isSpent = true
+) => {
+  const preparedData: MonthValues = months.reduce((total, month) => {
+    total[month] = 0;
+    return total;
+  }, {} as MonthValues);
 
   expenses.map((expense) => {
     const expenseDate = new Date(expense.date);
 
     // Data will shown of this year only
-    if (expenseDate.getFullYear() !== year) return;
+    if (expenseDate.getFullYear() !== year || expense.isSpent !== isSpent)
+      return;
 
     const expenseMonth = expenseDate.getMonth();
-    if (!preparedData[months[expenseMonth]])
-      preparedData[months[expenseMonth]] = expense.amount;
-    else preparedData[months[expenseMonth]] += expense.amount;
+    preparedData[months[expenseMonth]] += expense.amount;
   });
 
-  return preparedData;
+  const filteredMonthValues = removeTrailingZeros(preparedData, months);
+
+  // Print the resulting object to verify
+  console.log(filteredMonthValues);
+
+  return filteredMonthValues;
 };
+
+// Function to remove trailing zeros
+function removeTrailingZeros(
+  values: MonthValues,
+  months: string[]
+): MonthValues {
+  // Find the index of the last non-zero value
+  let lastNonZeroIndex = -1;
+  for (let i = months.length - 1; i >= 0; i--) {
+    if (values[months[i]] !== 0) {
+      lastNonZeroIndex = i;
+      break;
+    }
+  }
+
+  // Create a new object excluding months with zeros after the last non-zero value
+  const result: MonthValues = {};
+  for (let i = 0; i <= lastNonZeroIndex; i++) {
+    result[months[i]] = values[months[i]];
+  }
+
+  return result;
+}

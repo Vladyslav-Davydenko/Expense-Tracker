@@ -30,9 +30,12 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
   );
 
   const expensesSums: Record<string, number> = {};
+  const currentMonth = new Date().getMonth();
 
   expenses.map((expense) => {
     if (!expense?.type?.name) return;
+    const expenseMonth = new Date(expense.date).getMonth();
+    if (currentMonth !== expenseMonth || !expense.isSpent) return;
     if (!expensesSums[expense.type.name])
       expensesSums[expense.type.name] = expense.amount;
     else expensesSums[expense.type.name] += expense.amount;

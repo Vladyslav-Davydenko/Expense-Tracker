@@ -28,13 +28,13 @@ const Dashboard = () => {
       <div className="flex flex-wrap gap-4">
         <div className="rounded-md bg-primary shadow-md flex-1">
           <p className="p-4 rounded-md bg-primary shadow-md">
-            All Expenses each year comparison
+            Expenses and Incomes year comparison
           </p>
           <LineChart expenses={expenses ?? []} />
         </div>
         <div className="w-[400px] rounded-md bg-primary shadow-md">
           <p className="p-4 rounded-md bg-primary shadow-md">
-            Comparison by type expenses
+            Each type expenses by month
           </p>
           <DoughnutChart expenses={expenses ?? []} types={types ?? []} />
         </div>

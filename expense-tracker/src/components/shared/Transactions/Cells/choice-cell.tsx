@@ -39,9 +39,6 @@ export default function ChoiceCell({ getValue, row }: EditableCellProps) {
   const isMounted = useRef(false);
   const [value, setValue] = useState(initialValue);
   const [open, setOpen] = useState(false);
-
-  console.log({ value });
-
   const { data: types, isLoading: isTypesFetching } = useGetTypes();
   const { mutateAsync: updateExpense } = useUpdateExpenses();
 

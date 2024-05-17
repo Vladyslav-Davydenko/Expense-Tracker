@@ -64,13 +64,12 @@ const CreateExpense = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof CreateExpenseValidation>) => {
+    console.log(value);
     const newExpenses = {
       ...values,
       type: value,
       isSpent: spent,
     };
-
-    console.log("INside");
 
     const result = await createExpense(newExpenses);
 
