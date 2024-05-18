@@ -29,17 +29,25 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
     ArcElement
   );
 
-  const expensesSums: Record<string, number> = {};
+  const expensesSums: Record<string, number> = { others: 0 };
   const currentMonth = new Date().getMonth();
 
   expenses.map((expense) => {
-    if (!expense?.type?.name) return;
+    if (!expense || !expense?.isSpent) return;
+
+    if (!expense?.type?.name && expense?.amount) {
+      console.log(expense);
+      expensesSums["others"] += expense.amount;
+      return;
+    }
     const expenseMonth = new Date(expense.date).getMonth();
     if (currentMonth !== expenseMonth || !expense.isSpent) return;
     if (!expensesSums[expense.type.name])
       expensesSums[expense.type.name] = expense.amount;
     else expensesSums[expense.type.name] += expense.amount;
   });
+
+  console.log(expensesSums);
 
   const options = {
     responsive: true,

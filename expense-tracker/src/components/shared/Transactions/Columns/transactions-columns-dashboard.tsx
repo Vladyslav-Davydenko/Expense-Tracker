@@ -8,8 +8,8 @@ export const columns: ColumnDef<IExpenses>[] = [
     header: "Type",
     enableSorting: false,
     cell: ({ row }) => {
-      const boxColor = row.original.type.color;
-      const typeName = row.original.type.name;
+      const boxColor = row.original?.type?.color || "gray";
+      const typeName = row.original?.type?.name || "";
       return (
         <div className="flex gap-2 overflow-hidden max-w-[200px]">
           <div

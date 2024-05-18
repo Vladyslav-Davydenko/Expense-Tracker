@@ -1,5 +1,6 @@
 import { IExpenses } from "@/types";
-import { CreditCard, HandCoins, Wallet } from "lucide-react";
+import { CreditCard, HandCoins, Wallet, PencilLine } from "lucide-react";
+import CreateExpense from "../Transactions/dialog/CreateExpense";
 
 interface DashBoardTopBarProps {
   expenses: IExpenses[];
@@ -60,6 +61,12 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
           <p className="text-sm opacity-70">Expence</p>
           <p>{`$${expenseCount / 100}`}</p>
         </div>
+      </div>
+      <div className=" bg-primary min-w-[200px] h-[75px] rounded-md flex justify-start items-center gap-2 p-2 shadow-md">
+        <div className="p-3 border border-white rounded-md inline-flex">
+          <PencilLine />
+        </div>
+        <CreateExpense />
       </div>
     </div>
   );
