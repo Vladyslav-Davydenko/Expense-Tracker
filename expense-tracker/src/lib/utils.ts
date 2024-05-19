@@ -1,4 +1,4 @@
-import { IExpenses } from "@/types";
+import { IExpenses, IType } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -41,6 +41,8 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
+type TypeValues = Record<string, number>;
+
 type MonthValues = Record<string, number>;
 
 // Filter Expenses based on month
@@ -67,9 +69,6 @@ export const filterExpenses = (
 
   const filteredMonthValues = removeTrailingZeros(preparedData, months);
 
-  // Print the resulting object to verify
-  console.log(filteredMonthValues);
-
   return filteredMonthValues;
 };
 
@@ -95,3 +94,39 @@ function removeTrailingZeros(
 
   return result;
 }
+
+// interface filterTypesProps {
+//   expenses: IExpenses[];
+//   type: IType;
+//   year: number;
+//   isSpent?: boolean;
+// }
+
+export const filterTypes = (
+  expenses: IExpenses[],
+  type: IType,
+  year: number,
+  isSpent = true
+) => {
+  const preparedData: Record<string, number> = {};
+
+  expenses.map((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    if (!expense?.type) return;
+
+    // Data will shown of this year only and certain type
+    if (
+      expenseDate.getFullYear() !== year ||
+      expense.isSpent !== isSpent ||
+      type.$id !== expense.type.$id
+    )
+      return;
+
+    const expenseMonth = expenseDate.getMonth();
+    if (!preparedData[months[expenseMonth]])
+      preparedData[months[expenseMonth]] = 0;
+    preparedData[months[expenseMonth]] += expense.amount;
+  });
+  return preparedData;
+};
