@@ -41,9 +41,9 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
-type TypeValues = Record<string, number>;
+type ITypesSubData = Record<string, number>;
 
-type MonthValues = Record<string, number>;
+type IPreparedData = Record<string, ITypesSubData>;
 
 // Filter Expenses based on month
 export const filterExpenses = (
@@ -51,49 +51,34 @@ export const filterExpenses = (
   year: number,
   isSpent = true
 ) => {
-  const preparedData: MonthValues = months.reduce((total, month) => {
-    total[month] = 0;
+  const currentMonth = new Date().getMonth();
+  const preparedData: IPreparedData = months.reduce((total, month) => {
+    if (months.indexOf(month) <= currentMonth) total[month] = {};
     return total;
-  }, {} as MonthValues);
+  }, {} as IPreparedData);
 
   expenses.map((expense) => {
     const expenseDate = new Date(expense.date);
 
     // Data will shown of this year only
-    if (expenseDate.getFullYear() !== year || expense.isSpent !== isSpent)
+    if (
+      expenseDate.getFullYear() !== year ||
+      expense.isSpent !== isSpent ||
+      !expense?.type?.name
+    )
       return;
 
     const expenseMonth = expenseDate.getMonth();
-    preparedData[months[expenseMonth]] += expense.amount;
+    if (!preparedData[months[expenseMonth]][expense.type.name])
+      preparedData[months[expenseMonth]] = {
+        ...preparedData[months[expenseMonth]],
+        [expense.type.name]: 0,
+      };
+    preparedData[months[expenseMonth]][expense.type.name] += expense.amount;
   });
 
-  const filteredMonthValues = removeTrailingZeros(preparedData, months);
-
-  return filteredMonthValues;
+  return preparedData;
 };
-
-// Function to remove trailing zeros
-function removeTrailingZeros(
-  values: MonthValues,
-  months: string[]
-): MonthValues {
-  // Find the index of the last non-zero value
-  let lastNonZeroIndex = -1;
-  for (let i = months.length - 1; i >= 0; i--) {
-    if (values[months[i]] !== 0) {
-      lastNonZeroIndex = i;
-      break;
-    }
-  }
-
-  // Create a new object excluding months with zeros after the last non-zero value
-  const result: MonthValues = {};
-  for (let i = 0; i <= lastNonZeroIndex; i++) {
-    result[months[i]] = values[months[i]];
-  }
-
-  return result;
-}
 
 // interface filterTypesProps {
 //   expenses: IExpenses[];

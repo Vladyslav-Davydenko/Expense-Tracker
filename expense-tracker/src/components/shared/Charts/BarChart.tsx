@@ -42,6 +42,13 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
 
   const currentYear = new Date().getFullYear();
   const preparedData = filterExpenses(filteredExpenses, currentYear);
+  // Calculation prepared for charts
+  const expensesEachMonthForType = Object.keys(preparedData).map((_, indx) =>
+    Object.values(Object.values(preparedData)[indx]).reduce(
+      (total, amount) => total + amount,
+      0
+    )
+  );
 
   const options = {
     responsive: true,
@@ -94,9 +101,7 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
       {
         axis: "y",
         label: `Expenses for ${type.name} in ${currentYear}`,
-        data: Object.keys(preparedData)
-          .sort((a, b) => months.indexOf(a) - months.indexOf(b))
-          .map((key) => preparedData[key] / 100),
+        data: expensesEachMonthForType.map((t) => t / 100),
         backgroundColor: type.color,
         borderColor: "white",
         borderWidth: 2,

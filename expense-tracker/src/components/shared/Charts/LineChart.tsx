@@ -33,9 +33,25 @@ const LineChart = ({ expenses }: LineChartProps) => {
     LineElement
   );
 
-  const currentYear = new Date().getFullYear();
-  const preparedData = filterExpenses(expenses, currentYear, true);
-  const incomeData = filterExpenses(expenses, currentYear, false);
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+  const filteredExpenses = filterExpenses(expenses, currentYear, true);
+  const filteredIncomes = filterExpenses(expenses, currentYear, false);
+
+  // Calculation prepared for charts
+  const expensesEachMonth = Object.keys(filteredExpenses).map((_, indx) =>
+    Object.values(Object.values(filteredExpenses)[indx]).reduce(
+      (total, amount) => total + amount,
+      0
+    )
+  );
+  const incomesEachMonth = Object.keys(filteredIncomes).map((_, indx) =>
+    Object.values(Object.values(filteredIncomes)[indx]).reduce(
+      (total, amount) => total + amount,
+      0
+    )
+  );
 
   const options = {
     responsive: true,
@@ -80,13 +96,11 @@ const LineChart = ({ expenses }: LineChartProps) => {
     },
   };
   const data = {
-    labels: Object.keys(preparedData),
+    labels: months.slice(0, currentMonth + 1),
     datasets: [
       {
         label: `Expenses for ${currentYear}`,
-        data: Object.keys(preparedData)
-          .sort((a, b) => months.indexOf(a) - months.indexOf(b))
-          .map((key) => preparedData[key] / 100),
+        data: expensesEachMonth.map((t) => t / 100),
         backgroundColor: "red",
         borderColor: "red",
         borderWidth: 2,
@@ -94,9 +108,7 @@ const LineChart = ({ expenses }: LineChartProps) => {
 
       {
         label: `Incomes for ${currentYear}`,
-        data: Object.keys(incomeData)
-          .sort((a, b) => months.indexOf(a) - months.indexOf(b))
-          .map((key) => incomeData[key] / 100),
+        data: incomesEachMonth.map((t) => t / 100),
         backgroundColor: "green",
         borderColor: "green",
         borderWidth: 2,
