@@ -1,4 +1,5 @@
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,19 +10,19 @@ import {
   Legend,
   ArcElement,
   LineElement,
+  BarElement,
 } from "chart.js";
 import { IExpenses, IType } from "@/types";
 
 import { months } from "@/constants";
+import { filterExpensesOtherFormat } from "@/lib/utils";
 
-import { filterTypes } from "@/lib/utils";
-
-interface LineChartTypesProps {
+interface BarChartExtendedProps {
   expenses: IExpenses[];
   types: IType[];
 }
 
-const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
+const BarChartExtended = ({ expenses, types }: BarChartExtendedProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -31,18 +32,21 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
     Tooltip,
     Legend,
     ArcElement,
-    LineElement
+    LineElement,
+    BarElement
   );
 
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
-  const typesData: Record<string, Record<string, number>> = {};
-  types.map((type) => {
-    typesData[type.$id] = filterTypes(expenses, type, currentYear);
-  });
+  const preparedData = filterExpensesOtherFormat(
+    expenses,
+    types,
+    currentYear,
+    false
+  );
 
-  console.log(typesData);
+  console.log(preparedData);
 
   const options = {
     responsive: true,
@@ -57,8 +61,8 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
         callbacks: {
           label: function (context: any) {
             let label = "";
-            if (context.parsed.y !== null) {
-              label += " $" + context.parsed.y;
+            if (context.formattedValue !== null) {
+              label += " $" + context.formattedValue;
             }
             return label;
           },
@@ -67,7 +71,7 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        stacked: true,
         ticks: {
           color: "white",
           callback: function (
@@ -80,6 +84,7 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
         },
       },
       x: {
+        stacked: true,
         ticks: {
           color: "white",
         },
@@ -88,19 +93,21 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
   };
   const data = {
     labels: months.slice(0, currentMonth + 1),
-    datasets: Object.keys(typesData).map((typeDataId, indx) => {
+    datasets: Object.keys(preparedData).map((typeName) => {
       return {
-        label: types.map((type) => type.name)[indx],
-        data: Object.keys(typesData[typeDataId])
-          .sort((a, b) => months.indexOf(a) - months.indexOf(b))
-          .map((key) => typesData[typeDataId][key] / 100),
-        backgroundColor: types[indx].color,
-        borderColor: types[indx].color,
-        borderWidth: 2,
+        label: typeName,
+        data: Object.values(preparedData[typeName]).map(
+          (amount) => amount / 100
+        ),
+        backgroundColor:
+          types.find((type) => type.name === typeName)?.color || "gray",
+        borderColor: "white",
+        borderWidth: 0,
       };
     }),
   };
-  return <Line data={data} options={options} className=" p-4 " />;
+
+  return <Bar options={options} data={data} />;
 };
 
-export default LineChartTypes;
+export default BarChartExtended;

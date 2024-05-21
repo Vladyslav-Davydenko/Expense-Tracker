@@ -4,6 +4,8 @@ import { twMerge } from "tailwind-merge";
 
 import { months } from "@/constants";
 
+const currentMonth = new Date().getMonth();
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -51,7 +53,6 @@ export const filterExpenses = (
   year: number,
   isSpent = true
 ) => {
-  const currentMonth = new Date().getMonth();
   const preparedData: IPreparedData = months.reduce((total, month) => {
     if (months.indexOf(month) <= currentMonth) total[month] = {};
     return total;
@@ -80,6 +81,43 @@ export const filterExpenses = (
   return preparedData;
 };
 
+export const filterExpensesOtherFormat = (
+  expenses: IExpenses[],
+  types: IType[],
+  year: number,
+  isSpent = true
+) => {
+  const preparedData: IPreparedData = types.reduce((total, type) => {
+    total[type.name] = months.reduce((total, month) => {
+      if (months.indexOf(month) <= currentMonth) total[month] = 0;
+      return total;
+    }, {} as ITypesSubData);
+    return total;
+  }, {} as IPreparedData);
+
+  expenses.map((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    // Data will shown of this year only
+    if (
+      expenseDate.getFullYear() !== year ||
+      expense.isSpent !== isSpent ||
+      !expense?.type?.name
+    )
+      return;
+    const expenseType = expense.type.name;
+    const expenseMonth = expenseDate.getMonth();
+    if (!preparedData[expenseType][months[expenseMonth]])
+      preparedData[expenseType] = {
+        ...preparedData[expenseType],
+        [months[expenseMonth]]: 0,
+      };
+    preparedData[expenseType][months[expenseMonth]] += expense.amount;
+  });
+
+  return preparedData;
+};
+
 // interface filterTypesProps {
 //   expenses: IExpenses[];
 //   type: IType;
@@ -93,7 +131,11 @@ export const filterTypes = (
   year: number,
   isSpent = true
 ) => {
-  const preparedData: Record<string, number> = {};
+  const currentMonth = new Date().getMonth();
+  const preparedData: ITypesSubData = months.reduce((total, month) => {
+    if (months.indexOf(month) <= currentMonth) total[month] = 0;
+    return total;
+  }, {} as ITypesSubData);
 
   expenses.map((expense) => {
     const expenseDate = new Date(expense.date);

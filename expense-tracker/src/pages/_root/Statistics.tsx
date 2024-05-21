@@ -1,3 +1,4 @@
+import BarChartExtended from "@/components/shared/Charts/BarChartExtended";
 import LineChartTypes from "@/components/shared/Charts/LineChartTypes";
 import {
   useGetExpenses,
@@ -14,10 +15,18 @@ const Statistics = () => {
         Statistics
       </h2>
       <div className="flex justify-center items-center gap-10">
-        <div className="rounded-md bg-primary shadow-md flex-1 h-[400px]">
+        <div className="rounded-md bg-primary shadow-md flex-1">
+          <p className="p-4 rounded-md bg-primary shadow-md">
+            Expenses statistics
+          </p>
           <LineChartTypes types={types || []} expenses={expenses || []} />
         </div>
-        <div>Income complex Bar Chart here</div>
+        <div className="rounded-md bg-primary shadow-md flex-1">
+          <p className="p-4 rounded-md bg-primary shadow-md">
+            Income statistics
+          </p>
+          <BarChartExtended types={types || []} expenses={expenses || []} />
+        </div>
       </div>
     </div>
   );
