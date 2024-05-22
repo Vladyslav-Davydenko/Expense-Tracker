@@ -5,11 +5,6 @@ export const sidebarLinks = [
     label: "DashBoard",
   },
   {
-    imgURL: "/assets/icons/investments.svg",
-    route: "/investments",
-    label: "Investments",
-  },
-  {
     imgURL: "/assets/icons/statistics.svg",
     route: "/statistics",
     label: "Statistics",

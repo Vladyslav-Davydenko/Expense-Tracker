@@ -37,8 +37,16 @@ const LineChart = ({ expenses }: LineChartProps) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
-  const filteredExpenses = filterExpenses(expenses, currentYear, true);
-  const filteredIncomes = filterExpenses(expenses, currentYear, false);
+  const filteredExpenses = filterExpenses({
+    expenses,
+    year: currentYear,
+    isSpent: true,
+  });
+  const filteredIncomes = filterExpenses({
+    expenses,
+    year: currentYear,
+    isSpent: false,
+  });
 
   // Calculation prepared for charts
   const expensesEachMonth = Object.keys(filteredExpenses).map((_, indx) =>

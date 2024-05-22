@@ -40,12 +40,12 @@ const BarChartExtended = ({ expenses, types }: BarChartExtendedProps) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
-  const preparedData = filterExpensesOtherFormat(
+  const preparedData = filterExpensesOtherFormat({
     expenses,
     types,
-    currentYear,
-    false
-  );
+    year: currentYear,
+    isSpent: false,
+  });
 
   console.log(preparedData);
 

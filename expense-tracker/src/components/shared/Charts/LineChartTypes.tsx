@@ -40,7 +40,7 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
   const currentYear = currentDate.getFullYear();
   const typesData: Record<string, Record<string, number>> = {};
   types.map((type) => {
-    typesData[type.$id] = filterTypes(expenses, type, currentYear);
+    typesData[type.$id] = filterTypes({ expenses, type, year: currentYear });
   });
 
   console.log(typesData);

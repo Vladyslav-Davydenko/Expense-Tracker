@@ -6,7 +6,6 @@ import { SigninForm } from "./pages/_auth/forms/SigninForm";
 import { SignupForm } from "./pages/_auth/forms/SignupForm";
 import {
   Dashboard,
-  Investments,
   Statistics,
   Types,
   Transactions,
@@ -31,7 +30,6 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/types" element={<Types />} />
-          <Route path="/investments" element={<Investments />} />
           <Route path="/tests" element={<Tests count={0} />} />
         </Route>
       </Routes>

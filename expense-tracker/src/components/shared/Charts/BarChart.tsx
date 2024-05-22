@@ -42,7 +42,10 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
   );
 
   const currentYear = new Date().getFullYear();
-  const preparedData = filterExpenses(filteredExpenses, currentYear);
+  const preparedData = filterExpenses({
+    expenses: filteredExpenses,
+    year: currentYear,
+  });
   // Calculation prepared for charts
   const expensesEachMonthForType = Object.keys(preparedData).map((_, indx) =>
     Object.values(Object.values(preparedData)[indx]).reduce(

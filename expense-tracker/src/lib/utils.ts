@@ -47,12 +47,18 @@ type ITypesSubData = Record<string, number>;
 
 type IPreparedData = Record<string, ITypesSubData>;
 
+interface IFilterExpense {
+  expenses: IExpenses[];
+  year: number;
+  isSpent?: boolean;
+}
+
 // Filter Expenses based on month
-export const filterExpenses = (
-  expenses: IExpenses[],
-  year: number,
-  isSpent = true
-) => {
+export const filterExpenses = ({
+  expenses,
+  year,
+  isSpent = true,
+}: IFilterExpense) => {
   const preparedData: IPreparedData = months.reduce((total, month) => {
     if (months.indexOf(month) <= currentMonth) total[month] = {};
     return total;
@@ -81,12 +87,19 @@ export const filterExpenses = (
   return preparedData;
 };
 
-export const filterExpensesOtherFormat = (
-  expenses: IExpenses[],
-  types: IType[],
-  year: number,
-  isSpent = true
-) => {
+interface IFilterExpensesOtherFormat {
+  expenses: IExpenses[];
+  types: IType[];
+  year: number;
+  isSpent?: boolean;
+}
+
+export const filterExpensesOtherFormat = ({
+  expenses,
+  types,
+  year,
+  isSpent = true,
+}: IFilterExpensesOtherFormat) => {
   const preparedData: IPreparedData = types.reduce((total, type) => {
     total[type.name] = months.reduce((total, month) => {
       if (months.indexOf(month) <= currentMonth) total[month] = 0;
@@ -118,19 +131,19 @@ export const filterExpensesOtherFormat = (
   return preparedData;
 };
 
-// interface filterTypesProps {
-//   expenses: IExpenses[];
-//   type: IType;
-//   year: number;
-//   isSpent?: boolean;
-// }
+interface filterTypesProps {
+  expenses: IExpenses[];
+  type: IType;
+  year: number;
+  isSpent?: boolean;
+}
 
-export const filterTypes = (
-  expenses: IExpenses[],
-  type: IType,
-  year: number,
-  isSpent = true
-) => {
+export const filterTypes = ({
+  expenses,
+  type,
+  year,
+  isSpent = true,
+}: filterTypesProps) => {
   const currentMonth = new Date().getMonth();
   const preparedData: ITypesSubData = months.reduce((total, month) => {
     if (months.indexOf(month) <= currentMonth) total[month] = 0;
