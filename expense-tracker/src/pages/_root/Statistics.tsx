@@ -6,8 +6,8 @@ import {
 } from "@/lib/react-query/QueriesAndMuntations";
 
 const Statistics = () => {
-  const { data: types, isLoading: isTypesLoading } = useGetTypes();
-  const { data: expenses, isLoading: isExpensesLoading } = useGetExpenses();
+  const { data: types } = useGetTypes();
+  const { data: expenses } = useGetExpenses();
 
   return (
     <div className="container py-10 h-dvh">

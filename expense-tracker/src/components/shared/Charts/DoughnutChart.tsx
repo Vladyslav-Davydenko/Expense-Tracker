@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
+  TooltipItem,
 } from "chart.js";
 import { IExpenses, IType } from "@/types";
 
@@ -36,7 +37,6 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
     if (!expense || !expense?.isSpent) return;
 
     if (!expense?.type?.name && expense?.amount) {
-      console.log(expense);
       expensesSums["others"] += expense.amount;
       return;
     }
@@ -46,8 +46,6 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
       expensesSums[expense.type.name] = expense.amount;
     else expensesSums[expense.type.name] += expense.amount;
   });
-
-  console.log(expensesSums);
 
   const options = {
     responsive: true,
@@ -60,13 +58,13 @@ const DoughnutChart = ({ expenses, types }: DoughnutChartProps) => {
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem<"doughnut">) {
             let label = context.label || "";
             if (label) {
               label += ": ";
             }
-            if (context.raw !== null) {
-              label += "$" + context.raw / 100;
+            if (context.parsed) {
+              label += "$" + context.parsed / 100;
             }
             return label;
           },

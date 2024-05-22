@@ -13,6 +13,7 @@ import {
   BarElement,
 } from "chart.js";
 import { IExpenses, IType } from "@/types";
+import { TooltipItem } from "chart.js";
 
 import { months } from "@/constants";
 import { filterExpenses } from "@/lib/utils";
@@ -63,7 +64,7 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem<"bar">) {
             let label = "";
             if (context.formattedValue !== null) {
               label += " $" + context.formattedValue;
@@ -82,11 +83,7 @@ const BarChart = ({ expenses, type }: BarChartProps) => {
       x: {
         ticks: {
           color: "white",
-          callback: function (
-            value: unknown,
-            _index: unknown,
-            _values: unknown
-          ) {
+          callback: function (value: unknown) {
             return "$" + value;
           },
         },

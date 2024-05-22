@@ -11,6 +11,7 @@ import {
   ArcElement,
   LineElement,
   BarElement,
+  TooltipItem,
 } from "chart.js";
 import { IExpenses, IType } from "@/types";
 
@@ -59,7 +60,7 @@ const BarChartExtended = ({ expenses, types }: BarChartExtendedProps) => {
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem<"bar">) {
             let label = "";
             if (context.formattedValue !== null) {
               label += " $" + context.formattedValue;
@@ -74,11 +75,7 @@ const BarChartExtended = ({ expenses, types }: BarChartExtendedProps) => {
         stacked: true,
         ticks: {
           color: "white",
-          callback: function (
-            value: unknown,
-            _index: unknown,
-            _values: unknown
-          ) {
+          callback: function (value: unknown) {
             return "$" + value;
           },
         },

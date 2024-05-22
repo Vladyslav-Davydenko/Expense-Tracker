@@ -9,6 +9,7 @@ import {
   Legend,
   ArcElement,
   LineElement,
+  TooltipItem,
 } from "chart.js";
 import { IExpenses, IType } from "@/types";
 
@@ -55,7 +56,7 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
       },
       tooltip: {
         callbacks: {
-          label: function (context: any) {
+          label: function (context: TooltipItem<"line">) {
             let label = "";
             if (context.parsed.y !== null) {
               label += " $" + context.parsed.y;
@@ -70,11 +71,7 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
         beginAtZero: true,
         ticks: {
           color: "white",
-          callback: function (
-            value: unknown,
-            _index: unknown,
-            _values: unknown
-          ) {
+          callback: function (value: unknown) {
             return "$" + value;
           },
         },
