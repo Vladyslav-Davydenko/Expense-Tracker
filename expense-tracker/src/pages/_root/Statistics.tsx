@@ -1,11 +1,10 @@
 import BarChartExtended from "@/components/shared/Charts/BarChartExtended";
+import IncomeExpenseData from "@/components/shared/Statistics/IncomeExpenseData";
 import LineChartTypes from "@/components/shared/Charts/LineChartTypes";
 import {
   useGetExpenses,
   useGetTypes,
 } from "@/lib/react-query/QueriesAndMuntations";
-
-import { ArrowUp, ArrowDown } from "lucide-react";
 
 const Statistics = () => {
   const { data: types } = useGetTypes();
@@ -29,40 +28,7 @@ const Statistics = () => {
           </p>
           <BarChartExtended types={types || []} expenses={expenses || []} />
         </div>
-        <div className="grid grid-cols-2 gap-10">
-          <div className="p-4 rounded-md bg-primary shadow-md">
-            <p className=" text-sm opacity-80">Largest expense</p>
-            <div className="mt-4 flex justify-end items-end">
-              <p className="text-lg">$1234</p>
-              <ArrowDown className=" text-red-500" />
-              <span className="text-sm text-red-500 ">12%</span>
-            </div>
-          </div>
-          <div className="p-4 rounded-md bg-primary shadow-md">
-            <p className=" text-sm opacity-80">Biggest income</p>
-            <div className="mt-4 flex justify-end items-start">
-              <p className="text-lg">$1234</p>
-              <ArrowUp className=" text-green-500" />
-              <span className="text-sm text-green-500 ">12%</span>
-            </div>
-          </div>
-          <div className="p-4 rounded-md bg-primary shadow-md">
-            <p className=" text-sm opacity-80">Comparison expenses</p>
-            <div className="mt-4 flex justify-end items-end">
-              <p className="text-lg">$1234</p>
-              <ArrowDown className=" text-red-500" />
-              <span className="text-sm text-red-500 ">12%</span>
-            </div>
-          </div>
-          <div className="p-4 rounded-md bg-primary shadow-md">
-            <p className=" text-sm opacity-80">Comparison income</p>
-            <div className="mt-4 flex justify-end items-start">
-              <p className="text-lg">$1234</p>
-              <ArrowUp className=" text-green-500" />
-              <span className="text-sm text-green-500 ">12%</span>
-            </div>
-          </div>
-        </div>
+        <IncomeExpenseData expenses={expenses || []} />
         <div className="rounded-md bg-primary shadow-md flex-1">
           <p className="p-4 rounded-md bg-primary shadow-md">
             Income statistics

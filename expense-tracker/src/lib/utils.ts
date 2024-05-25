@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { months } from "@/constants";
 
 const currentMonth = new Date().getMonth();
+const currentYear = new Date().getFullYear();
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -169,4 +170,34 @@ export const filterTypes = ({
     preparedData[months[expenseMonth]] += expense.amount;
   });
   return preparedData;
+};
+
+interface ICalculateLargest {
+  expenses: IExpenses[];
+  isSpent?: boolean;
+  month: number;
+}
+
+export const calculateLargest = ({
+  expenses,
+  isSpent = true,
+  month,
+}: ICalculateLargest) => {
+  const maxValue = -Infinity;
+
+  const amountInCoins = expenses
+    .filter((expense) => {
+      const expenseDate = new Date(expense.date);
+      if (expense.isSpent !== isSpent) return;
+      if (expenseDate.getFullYear() !== currentYear) return;
+      if (expenseDate.getMonth() !== month) return;
+
+      return expense;
+    })
+    .reduce((total, expense) => {
+      if (expense.amount > maxValue) return total + expense.amount;
+      return total;
+    }, 0);
+
+  return amountInCoins / 100;
 };
