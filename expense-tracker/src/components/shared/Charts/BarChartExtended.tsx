@@ -47,8 +47,6 @@ const BarChartExtended = ({ expenses, types }: BarChartExtendedProps) => {
     isSpent: false,
   });
 
-  console.log(preparedData);
-
   const options = {
     responsive: true,
     plugins: {

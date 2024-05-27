@@ -88,6 +88,32 @@ export const filterExpenses = ({
   return preparedData;
 };
 
+interface filterExpensesBasedOnMonthProps {
+  expenses: IExpenses[];
+  isSpent?: boolean;
+  month: number;
+}
+
+// Filter Expenses based on month provided
+export const filterExpensesBasedOnMonth = ({
+  expenses,
+  isSpent = true,
+  month,
+}: filterExpensesBasedOnMonthProps) => {
+  const filteredExpenses = filterExpenses({
+    expenses,
+    year: currentYear,
+    isSpent,
+  });
+
+  const totalBasedOnMonth = Object.keys(filteredExpenses[months[month]]).reduce(
+    (total, expense) => total + filteredExpenses[months[month]][expense],
+    0
+  );
+
+  return totalBasedOnMonth / 100;
+};
+
 interface IFilterExpensesOtherFormat {
   expenses: IExpenses[];
   types: IType[];
@@ -195,7 +221,7 @@ export const calculateLargest = ({
       return expense;
     })
     .reduce((total, expense) => {
-      if (expense.amount > maxValue) return total + expense.amount;
+      if (expense.amount > maxValue) return expense.amount;
       return total;
     }, 0);
 

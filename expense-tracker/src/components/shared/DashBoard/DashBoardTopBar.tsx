@@ -38,7 +38,7 @@ const DashBoardTopBar = ({ expenses }: DashBoardTopBarProps) => {
         <div className="flex flex-col">
           <p className="text-sm opacity-70">Available Balance</p>
           <p>{`${
-            availableCount > 0
+            availableCount >= 0
               ? "$" + availableCount / 100
               : "-$" + availableCount / -100
           }`}</p>

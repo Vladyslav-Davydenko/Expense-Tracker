@@ -43,8 +43,6 @@ const LineChartTypes = ({ expenses, types }: LineChartTypesProps) => {
     typesData[type.$id] = filterTypes({ expenses, type, year: currentYear });
   });
 
-  console.log(typesData);
-
   const options = {
     responsive: true,
     plugins: {
